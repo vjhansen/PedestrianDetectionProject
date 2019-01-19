@@ -7,3 +7,7 @@ $ tar xf ssd_mobilenet_v1_coco_2018_01_28.tar.gz
 
 Krever:
 - pycocotools
+
+
+models/research 
+ ``` protoc object_detection/protos/*.proto --python_out=. ```
