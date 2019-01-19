@@ -15,6 +15,6 @@ $ cd protobuf-python-3.6.1
 $ sudo ./configure
 $ sudo make check
 $ sudo make install
-
+```
 models/research 
  ``` $ protoc object_detection/protos/*.proto --python_out=. ```
