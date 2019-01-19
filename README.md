@@ -46,3 +46,20 @@ OK
  #git clone https://github.com/vjhansen/pdp-bachelor.git (senere, privat nå)
  
 ```
+
+## legge til filer
+
+- object_detection
+-- data
+--- test.record
+--- train.record
+
+-- training (lag ny folder)
+--- .config file
+--- training_ob-det.pbtxt
+
+
+## bytt til GPU-maskin
+```
+python3 model_main.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_coco.config
+```
