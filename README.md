@@ -60,5 +60,6 @@ OK
 
 ## bytt til GPU-maskin
 ```
+pip -q install pycocotools
 python3 model_main.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_coco.config
 ```
