@@ -17,17 +17,17 @@ Installere Protobuf.
 ```
 Klone modell fra TensorFlow.
 ```
-cd /floyd/
+cd /floyd/home
 git clone https://github.com/tensorflow/models.git
 
 cd models/research && \
 git reset --hard ea6d6aa && \
 /usr/local/bin/protoc object_detection/protos/*.proto --python_out=. && \
-cp -R object_detection /floyd/code && cp -R slim /floyd/code
+cp -R object_detection /floyd/home/code && cp -R slim /floyd/home/code
 
 rm -rf /floyd/code/models
-export PYTHONPATH=$PYTHONPATH:/floyd/code/object_detection/:/floyd/code/slim
-cd /floyd/code/ && python object_detection/builders/model_builder_test.py
+export PYTHONPATH=$PYTHONPATH:/floyd/home/code/object_detection/:/floyd/home/code/slim
+cd /floyd/home/code/ && python object_detection/builders/model_builder_test.py
 
 ```
 Output skal være: 
@@ -39,7 +39,7 @@ OK
 ### 2) Laste ned coco modell
 
 ```
- cd object_detection
+ cd /floyd/home/code/object_detection
  wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_2018_01_28.tar.gz
  tar xf ssd_mobilenet_v1_coco_2018_01_28.tar.gz
  
@@ -49,13 +49,17 @@ OK
 
 ### 3) legge til filer
 ```
-- object_detection
- -- data
-  --- test.record
-  --- train.record
- -- training (lag ny folder)
-  --- .config file
-  --- training_ob-det.pbtxt
+mkdir training
+```
+
+```
+|-> object_detection
+||--> data
+| |---> test.record
+| |---> train.record
+||--> training
+| |---> ssd_mobilenet_v1_coco.config
+| |---> training_ob-det.pbtxt
 ```
 
 ### 4) bytt til GPU-maskin
