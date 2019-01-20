@@ -5,6 +5,8 @@
 - Environment: TensorFlow 1.12, Machine: CPU (bytter til GPU senere)
 - Åpne Terminal fra Launcher/Other
 
+```sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-upgrade```
+
 Installere Protobuf.
 ```
  cd /tmp/
@@ -23,11 +25,11 @@ git clone https://github.com/tensorflow/models.git
 cd models/research && \
 git reset --hard ea6d6aa && \
 /usr/local/bin/protoc object_detection/protos/*.proto --python_out=. && \
-cp -R object_detection /floyd/home/code && cp -R slim /floyd/home/code
+cp -R object_detection /floyd/home && cp -R slim /floyd/home
 
 rm -rf /floyd/code/models
-export PYTHONPATH=$PYTHONPATH:/floyd/home/code/object_detection/:/floyd/home/code/slim
-cd /floyd/home/code/ && python object_detection/builders/model_builder_test.py
+export PYTHONPATH=$PYTHONPATH:/floyd/home/object_detection/:/floyd/home/slim
+cd /floyd/home && python object_detection/builders/model_builder_test.py
 
 ```
 Output skal være: 
@@ -39,7 +41,7 @@ OK
 ### 2) Laste ned coco modell
 
 ```
- cd /floyd/home/code/object_detection
+ cd /floyd/home/object_detection
  wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_2018_01_28.tar.gz
  tar xf ssd_mobilenet_v1_coco_2018_01_28.tar.gz
  
@@ -67,16 +69,16 @@ object_detection
 ### 4) bytt til GPU-maskin
 ```
 pip -q install pycocotools
+mkdir tensorboard_data
 
-python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_coco.config
+cd /floyd/home/object_detection
+python train.py --logtostderr --train_dir=floyd/home/tensorboard_data --pipeline_config_path=/training/ssd_mobilenet_v1_coco.config
 
-V
-python model_main.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_coco.config
 
 
 Tensorboard
 cp -R training/ /floyd/home
-tensorboard --logdir='training'
+tensorboard --logdir='floyd/home/tensorboard_data'
 eller trykk på TensorBoard-knappen nederst på skjermen (ved cpu-% osv)
 ```
 
