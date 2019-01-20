@@ -53,13 +53,15 @@ mkdir training
 ```
 
 ```
-|-> object_detection
-||--> data
-| |---> test.record
-| |---> train.record
-||--> training
-| |---> ssd_mobilenet_v1_coco.config
-| |---> training_ob-det.pbtxt
+object_detection
+|--> data
+|   |--> test.record
+|   |--> train.record
+|   
+|--> training
+|   |--> ssd_mobilenet_v1_coco.config
+|   |--> training_ob-det.pbtxt
+
 ```
 
 ### 4) bytt til GPU-maskin
