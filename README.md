@@ -61,5 +61,14 @@ OK
 ### 4) bytt til GPU-maskin
 ```
 pip -q install pycocotools
+
+python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_coco.config
+
+V
 python model_main.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_coco.config
+
+
+Tensorboard
+tensorboard --logdir='training' --host=127.0.0.1
+
 ```
