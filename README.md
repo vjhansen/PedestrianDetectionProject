@@ -89,13 +89,13 @@ eller trykk på TensorBoard-knappen nederst på skjermen (ved cpu-% osv)
 ```
 
 ### 5) Evaluering
-
+```
 python eval.py \
     --logtostderr \
     --pipeline_config_path=training/ssd_mobilenet_v1_coco.config \
     --checkpoint_dir=/floyd/home/tensorboard_data  \
     --eval_dir=eval/
-
+```
 
 ### 6) eksportere inference graph
 ```
