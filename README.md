@@ -36,7 +36,7 @@ Ran 15 tests in 0.s
 OK
 
 
-## Laste ned coco modell
+### 2) Laste ned coco modell
 
 ```
  cd object_detection
@@ -47,7 +47,7 @@ OK
  
 ```
 
-## legge til filer
+### 3) legge til filer
 ```
 - object_detection
  -- data
@@ -58,8 +58,8 @@ OK
   --- training_ob-det.pbtxt
 ```
 
-## bytt til GPU-maskin
+### 4) bytt til GPU-maskin
 ```
 pip -q install pycocotools
-python3 model_main.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_coco.config
+python model_main.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_coco.config
 ```
