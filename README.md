@@ -47,6 +47,7 @@ OK
 
 ```
  cd /floyd/home/kode/object_detection
+ #kan egentlig bare lagres i /kode
  wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_2018_01_28.tar.gz
  tar xf ssd_mobilenet_v1_coco_2018_01_28.tar.gz
  
@@ -76,8 +77,8 @@ cd /floyd/home/
 pip -q install pycocotools
 mkdir tensorboard_data
 
-cd /floyd/home/object_detection
-python train.py --logtostderr --train_dir=floyd/home/tensorboard_data --pipeline_config_path=/training/ssd_mobilenet_v1_coco.config
+cd /floyd/home/kode
+python train.py --logtostderr --train_dir=/floyd/home/tensorboard_data --pipeline_config_path=training/ssd_mobilenet_v1_coco.config
 
 
 
