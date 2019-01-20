@@ -2,7 +2,7 @@
 
 ### 1) Oppsett - FloydHub
 - Create Workspace
-- Environment: TensorFlow 1.12, Machine: CPU (bytter til GPU senere)
+- Environment: TensorFlow 1.12, Machine: GPU
 - Åpne Terminal fra Launcher/Other
 
 ```sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-upgrade```
@@ -25,37 +25,41 @@ git clone https://github.com/tensorflow/models.git
 cd models/research && \
 git reset --hard ea6d6aa && \
 /usr/local/bin/protoc object_detection/protos/*.proto --python_out=. && \
-cp -R object_detection /floyd/home && cp -R slim /floyd/home
+cp -R object_detection /floyd/home/kode && cp -R slim /floyd/home/kode
 
-rm -rf /floyd/code/models
-export PYTHONPATH=$PYTHONPATH:/floyd/home/object_detection/:/floyd/home/slim
-cd /floyd/home && python object_detection/builders/model_builder_test.py
+(^kjør denne på nytt hvis: 
+can't open file 'object_detection/builders/model_builder_test.py': [Errno 2] No such file or directory
+)
+
+rm -rf /floyd/home/kode/models
+export PYTHONPATH=$PYTHONPATH:/floyd/home/kode/object_detection/:/floyd/home/kode/slim
+cd /floyd/home/kode && python object_detection/builders/model_builder_test.py
 
 ```
 Output skal være: 
-Ran 15 tests in 0.s
+```
+Ran 15 tests in 0.xxxs
 
 OK
-
+```
 
 ### 2) Laste ned coco modell
 
 ```
- cd /floyd/home/object_detection
+ cd /floyd/home/kode/object_detection
  wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_2018_01_28.tar.gz
  tar xf ssd_mobilenet_v1_coco_2018_01_28.tar.gz
  
  #git clone https://github.com/vjhansen/pdp-bachelor.git (senere, privat nå)
- 
 ```
 
 ### 3) legge til filer
 ```
+cd /floyd/home/kode/
 mkdir training
 ```
-
 ```
-object_detection
+kode
 |--> data
 |   |--> test.record
 |   |--> train.record
@@ -66,8 +70,9 @@ object_detection
 
 ```
 
-### 4) bytt til GPU-maskin
+### 4) Trening
 ```
+cd /floyd/home/
 pip -q install pycocotools
 mkdir tensorboard_data
 
