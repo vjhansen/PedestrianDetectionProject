@@ -69,6 +69,21 @@ python model_main.py --logtostderr --train_dir=training/ --pipeline_config_path=
 
 
 Tensorboard
-tensorboard --logdir='training' --host=127.0.0.1
+cp -R training/ /floyd/home
+tensorboard --logdir='training'
+eller trykk på TensorBoard-knappen nederst på skjermen (ved cpu-% osv)
+```
+
+
+### 5) eksportere inference graph
+```
+python3 export_inference_graph.py \
+    --input_type image_tensor \
+    --pipeline_config_path training/ssd_mobilenet_v1_coco.config \
+    --trained_checkpoint_prefix training/model.ckpt-10856 \
+    --output_directory pdp_alpha_inference_graph
+
+# model.ckpt-'største nr' (meta)
 
 ```
+
