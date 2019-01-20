@@ -48,16 +48,15 @@ OK
 ```
 
 ## legge til filer
-
+```
 - object_detection
--- data
---- test.record
---- train.record
-
--- training (lag ny folder)
---- .config file
---- training_ob-det.pbtxt
-
+ -- data
+  --- test.record
+  --- train.record
+ -- training (lag ny folder)
+  --- .config file
+  --- training_ob-det.pbtxt
+```
 
 ## bytt til GPU-maskin
 ```
