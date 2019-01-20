@@ -88,8 +88,16 @@ tensorboard --logdir='floyd/home/tensorboard_data'
 eller trykk på TensorBoard-knappen nederst på skjermen (ved cpu-% osv)
 ```
 
+### 5) Evaluering
 
-### 5) eksportere inference graph
+python eval.py \
+    --logtostderr \
+    --pipeline_config_path=training/ssd_mobilenet_v1_coco.config \
+    --checkpoint_dir=/floyd/home/tensorboard_data  \
+    --eval_dir=eval/
+
+
+### 6) eksportere inference graph
 ```
 python3 export_inference_graph.py \
     --input_type image_tensor \
