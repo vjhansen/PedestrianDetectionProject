@@ -99,10 +99,11 @@ python eval.py \
 
 ### 6) eksportere inference graph
 ```
+cd kode
 python3 export_inference_graph.py \
     --input_type image_tensor \
     --pipeline_config_path training/ssd_mobilenet_v1_coco.config \
-    --trained_checkpoint_prefix training/model.ckpt-10856 \
+    --trained_checkpoint_prefix /floyd/home/tensorboard_data/model.ckpt-xxx \
     --output_directory pdp_alpha_inference_graph
 
 # model.ckpt-'største nr' (meta)
