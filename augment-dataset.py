@@ -1,16 +1,24 @@
-# augment-dataset.py
-# https://augmentor.readthedocs.io/en/master/
+# speiler bilder
 
-import Augmentor
-import os
+import os, sys, cv2, numpy
 
-src = os.getcwd()+"/datasett/" 
+img_num = 1
+dir_src = "Datasets/"
+dir_dst = "testing/"
+src_files = os.listdir(dir_src)
 
-# dst-folder blir opprettet som 'output' i src-folder
+if not os.path.exists(dir_dst):
+	os.makedirs(dir_dst)
 
-p = Augmentor.Pipeline(src)
-
-#p.skew(probability=0.7, magnitude=1.0)
-#p.rotate(probability=1, max_left_rotation=5, max_right_rotation=5)
-p.flip_left_right(probability=1)
-p.sample(1000) # filer i folder
+for file in src_files:
+	if os.path.isfile(dir_src+file):
+		try:
+			a, b = os.path.splitext(dir_src + file)
+			img = cv2.imread(str(a+b), 1)
+			mirror_img = cv2.flip(img, 1)
+			cv2.imwrite(dir_dst + 'mir'+ str(img_num) + ".jpg", mirror_img)
+			print(img_num)
+			img_num += 1
+		
+		except Exception as e:
+			print(str(e))
