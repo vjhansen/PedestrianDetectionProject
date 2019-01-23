@@ -63,7 +63,7 @@ mkdir training
 kode
 |--> data
 |   |--> test.record
-|   |--> train.record
+|   |--> train.record (too big for github....) ligger på onedrive
 |   
 |--> training
 |   |--> ssd_mobilenet_v1_coco.config
