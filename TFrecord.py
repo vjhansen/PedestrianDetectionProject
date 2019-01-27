@@ -6,10 +6,10 @@
 Usage:
   # From tensorflow/models/
 # Create train data:
-python3 TFrecord.py --csv_input=data/train_labels.csv --output_path=data/train.record --image_dir=images/  
+python3 TFrecord.py --csv_input=data/train_labels.csv --output_path=data/train.record --image_dir=datasett/  
 
   # Create test data:
-python3 TFrecord.py --csv_input=data/test_labels.csv --output_path=data/test.record --image_dir=images/
+python3 TFrecord.py --csv_input=data/test_labels.csv --output_path=data/test.record --image_dir=datasett/
 
 """
 
@@ -83,7 +83,7 @@ def create_tf_example(group, path):
 
 def main(_):
     writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
-    path = os.path.join(os.getcwd(), 'images')
+    path = os.path.join(os.getcwd(), 'datasett')
     examples = pd.read_csv(FLAGS.csv_input)
     grouped = split(examples, 'filename')
     for group in grouped:
