@@ -62,8 +62,8 @@ mkdir training
 ```
 kode
 |--> data
-|   |--> test.record
-|   |--> train.record (too big for github....) ligger på onedrive
+|   |--> test.record (ligger på onedrive)
+|   |--> train.record (ligger på onedrive)
 |   
 |--> training
 |   |--> ssd_mobilenet_v1_coco.config
