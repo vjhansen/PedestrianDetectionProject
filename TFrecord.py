@@ -31,7 +31,7 @@ flags.DEFINE_string('output_path', '', 'Path to output TFRecord')
 FLAGS = flags.FLAGS
 
 def class_text_to_int(row_label):
-    if row_label == 'person':
+    if row_label == 'menneske':
         return 1
     else:
         None
