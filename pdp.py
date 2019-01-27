@@ -1,4 +1,4 @@
-#models/research/object_detection
+# siste oppdatering 27.01.19, Victor
 
 import numpy as np
 import os, sys, cv2
@@ -44,11 +44,7 @@ with detection_graph.as_default():
     tf.import_graph_def(od_graph_def, name='')
 
 
-# -- Loading label map --
-# Label maps map indices to category names, so that when our convolution network predicts `5`, 
-# we know that this corresponds to `airplane`.  
-# Here we use internal utility functions, but anything that returns a dictionary mapping integers to appropriate string labels would be fine
-
+# -- Load label map --
 label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
 categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES, use_display_name=True)
 category_index = label_map_util.create_category_index(categories)
