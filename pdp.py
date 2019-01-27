@@ -1,4 +1,4 @@
-# siste oppdatering 27.01.19, Victor
+# siste oppdatering 27.01.19, lizardman
 
 import numpy as np
 import os, sys, cv2
