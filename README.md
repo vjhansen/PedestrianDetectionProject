@@ -88,7 +88,7 @@ tensorboard --logdir='floyd/home/tensorboard_data'
 eller trykk på TensorBoard-knappen nederst på skjermen (ved cpu-% osv)
 ```
 
-### 5) Evaluering
+### 5) Testing/evaluering
 ```
 python eval.py \
     --logtostderr \
@@ -106,7 +106,7 @@ python3 export_inference_graph.py \
     --trained_checkpoint_prefix /floyd/home/tensorboard_data/model.ckpt-xxx \
     --output_directory pdp_alpha_inference_graph
 
-# model.ckpt-'største nr' (meta)
+# velg model.ckpt-'største nr' (meta)
 
 ```
 
