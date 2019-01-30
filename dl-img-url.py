@@ -1,13 +1,10 @@
 # dl-img-url.py 
 
-# http://www.image-net.org/about-overview
-
+import os, cv2
 import urllib.request as urlreq
-import cv2
 import numpy as np
-import os
 
-img_urls = urlreq.urlopen('http://www.image-net.org/api/text/imagenet.synset.geturls?wnid=n04335209').read().decode()
+img_urls = urlreq.urlopen('http://www.url..').read().decode()
 img_num = 1
     
 if not os.path.exists('datasett'):
