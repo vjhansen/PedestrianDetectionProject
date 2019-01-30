@@ -1,13 +1,7 @@
 # Kilde: https://github.com/datitran/raccoon_dataset/blob/master/xml_to_csv.py
 # hentet 08.01.19
 
-
-# bruker LabelImg for å merke bildene
-# https://github.com/tzutalin/labelImg
-
-
-import os
-import glob
+import os, glob
 import pandas as pd
 import xml.etree.ElementTree as ET
 
