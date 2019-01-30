@@ -1,7 +1,8 @@
-# siste oppdatering 27.01.19, lizardman
+# 30.01
+# python3 pdp.py
 
 import numpy as np
-import os, sys, cv2
+import sys, os, cv2, time
 import tensorflow as tf
 import zipfile, tarfile
 
@@ -15,14 +16,11 @@ cap = cv2.VideoCapture('vid2.mp4') # teste video
 
 sys.path.append("..")
 
-# Here are the imports from the object detection module.
+# Import fra object detection module.
 from utils import label_map_util
 from utils import visualization_utils as vis_util
 
-
 # Model preparation 
-# Any model exported using the `export_inference_graph.py` tool can be loaded here simply by changing `PATH_TO_CKPT` to point to a new .pb file.  
-
 MODEL_NAME = 'pdp-alpha-v2'
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
@@ -31,10 +29,10 @@ PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
 # List of the strings that is used to add correct label for each box.
 PATH_TO_LABELS = os.path.join('training', 'training_ob-det.pbtxt')
 
-# vi har bare 1 class = person
 NUM_CLASSES = 1
 
 # -- Load a (frozen) Tensorflow model into memory --
+
 detection_graph = tf.Graph()
 with detection_graph.as_default():
   od_graph_def = tf.GraphDef()
@@ -44,18 +42,29 @@ with detection_graph.as_default():
     tf.import_graph_def(od_graph_def, name='')
 
 
-# -- Load label map --
+# -- Loading label map --
+# Label maps map indices to category names, so that when our convolution network predicts `5`, 
+# we know that this corresponds to `airplane`.  
+# Here we use internal utility functions, but anything that returns a dictionary mapping integers to appropriate string labels would be fine
+
 label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
 categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES, use_display_name=True)
 category_index = label_map_util.create_category_index(categories)
 
-# -- Detection -- 
+def circle_draw(frame, x,y):
+  cv2.circle(frame, (x,y), 10, (0,0,255), -1)
+
 with detection_graph.as_default():
   with tf.Session(graph=detection_graph) as sess:
     while True:
-      ret, image_np = cap.read()
+      ret, frame = cap.read()
+      im_w = 720
+      im_h = 576
+      cv2.resize(frame, (im_w, im_h))
+      stime = time.time()
+      
       # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
-      image_np_expanded = np.expand_dims(image_np, axis=0)
+      frame_expanded = np.expand_dims(frame, axis=0)
       image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
       
       # Each box represents a part of the image where a particular object was detected.
@@ -66,25 +75,44 @@ with detection_graph.as_default():
       scores = detection_graph.get_tensor_by_name('detection_scores:0')
       classes = detection_graph.get_tensor_by_name('detection_classes:0')
       num_detections = detection_graph.get_tensor_by_name('num_detections:0')
-      
-      # Actual detection.
+
+      #Actual detection.
       (boxes, scores, classes, num_detections) = sess.run(
           [boxes, scores, classes, num_detections],
-          feed_dict={image_tensor: image_np_expanded})
-      
+          feed_dict={image_tensor: frame_expanded})
+  
       # Visualization of the results of a detection.
       vis_util.visualize_boxes_and_labels_on_image_array(
-          image_np,
+          frame,
           np.squeeze(boxes),
           np.squeeze(classes).astype(np.int32),
           np.squeeze(scores),
           category_index,
           use_normalized_coordinates=True,
-          min_score_thresh = .5, #50%
-          line_thickness=5)
+          min_score_thresh = .6, # 60%
+          line_thickness = 4)
+      
+      # getting normalized coordinates for bounding box
+      # ymin og ymax bytter plass (pga. koordinatsystem i pyplot)
+      ymax = (boxes[0][0][0]) 
+      xmin = (boxes[0][0][1])
+      ymin = (boxes[0][0][2])
+      xmax = (boxes[0][0][3])
 
-      cv2.imshow('PDP', cv2.resize(image_np, (720,576)))
+      cols = (frame.shape[1])
+      rows = (frame.shape[0])
+      
+      # sentrum av rektangel
+      xCenter = int((xmax + xmin)*cols / 2.0)
+      yCenter = int((ymax + ymin)*rows / 2.0)
+
+      (left, right, top, bottom) = (xmin*im_w, xmax*im_w, ymin*im_h, ymax*im_h)
+      
+      # openCV stuff....
+      print('FPS {:.1f}'.format(1/(time.time()-stime)))
+      circle_draw(frame, xCenter, yCenter)
+      cv2.imshow('PDP', cv2.resize(frame, (im_w, im_h)))
       if cv2.waitKey(1) & 0xFF == ord('q'):
-        cv2.destroyAllWindows()
         break
+cv2.destroyAllWindows()
 cap.release()
