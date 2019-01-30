@@ -13,9 +13,9 @@ from PIL import Image
 
 #cap = cv2.VideoCapture(0) # webcam: prøv (-1,0,1)
 cap = cv2.VideoCapture('vid2.mp4') # teste video
+time.sleep(3.0)
 
 sys.path.append("..")
-
 # Import fra object detection module.
 from utils import label_map_util
 from utils import visualization_utils as vis_util
@@ -80,7 +80,10 @@ with detection_graph.as_default():
       (boxes, scores, classes, num_detections) = sess.run(
           [boxes, scores, classes, num_detections],
           feed_dict={image_tensor: frame_expanded})
-  
+      
+      score_thresh = 0.6
+      max_bbx = 2
+      
       # Visualization of the results of a detection.
       vis_util.visualize_boxes_and_labels_on_image_array(
           frame,
@@ -89,7 +92,8 @@ with detection_graph.as_default():
           np.squeeze(scores),
           category_index,
           use_normalized_coordinates=True,
-          min_score_thresh = .6, # 60%
+          max_boxes_to_draw = max_bbx,
+          min_score_thresh = score_thresh,
           line_thickness = 4)
       
       # getting normalized coordinates for bounding box
@@ -109,8 +113,13 @@ with detection_graph.as_default():
       (left, right, top, bottom) = (xmin*im_w, xmax*im_w, ymin*im_h, ymax*im_h)
       
       # openCV stuff....
-      print('FPS {:.1f}'.format(1/(time.time()-stime)))
-      circle_draw(frame, xCenter, yCenter)
+      # print('FPS {:.1f}'.format(1/(time.time()-stime)))
+      
+      for i in range(min(max_bbx, boxes.shape[0])):
+        if np.squeeze(scores)[i] > score_thresh:
+          circle_draw(frame, xCenter, yCenter)
+          print('target acquired')
+      
       cv2.imshow('PDP', cv2.resize(frame, (im_w, im_h)))
       if cv2.waitKey(1) & 0xFF == ord('q'):
         break
