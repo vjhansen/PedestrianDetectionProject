@@ -54,8 +54,7 @@ def circle_draw(frame, x,y):
 with detection_graph.as_default():
   with tf.Session(graph = detection_graph) as sess:
     while True:
-
-	  # - leser videokilde    
+	
       ret, frame = cap.read()
 
       # - størrelse på display-vindu
@@ -103,7 +102,7 @@ with detection_graph.as_default():
       ymax = (boxes[0][0][2])
       xmax = (boxes[0][0][3])
 
-      # - W (bredde) og H (høyde) endres med oppløsningen på film/kamera
+      # - W (bredde) og H (høyde) endres med oppløsningen på input
       # - ex. webcam på mac gir 1920x1080
       W = (frame.shape[1]) # - horisontal
       H = (frame.shape[0]) # - vertikal
