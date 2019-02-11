@@ -50,10 +50,11 @@ OK
  cd /floyd/home/kode/object_detection
  # kan egentlig bare lagres i /kode
  wget http://download.tensorflow.org/models/object_detection/ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz
- # wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_2018_01_28.tar.gz
- tar xf ssd_mobilenet_v1_coco_2018_01_28.tar.gz
- 
- #git clone https://github.com/vjhansen/pdp-bachelor.git (senere, privat nå)
+ tar xf ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz
+
+# wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_2018_01_28.tar.gz
+# tar xf ssd_mobilenet_v1_coco_2018_01_28.tar.gz
+# git clone https://github.com/vjhansen/pdp-bachelor.git (senere, privat nå)
 ```
 
 ### 3) legge til filer
