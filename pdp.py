@@ -1,5 +1,8 @@
-# 31.01, victor
+# PDP - Bachelor 19, AUT, UiT
+# update: 31.01, victor
 # python 3
+
+# se denne: https://www.pyimagesearch.com/2015/12/21/increasing-webcam-fps-with-python-and-opencv/
 
 import numpy
 import sys
@@ -17,17 +20,16 @@ from utils import visualization_utils as vis_util
 #cap = cv2.VideoCapture(0) # - usbkamera/webcam: forsøk (-1), (0) eller (1)
 cap = cv2.VideoCapture('vid3.mp4') # - teste video
 
-#sys.path.append("..")
-
+# - laster inn ferdigtrent modell
 modell = 'pdp-alpha-v2'
 
-# - Path to frozen detection graph. This is the actual model that is used for the object detection.
+# - Frozen detection graph. Dette er modellen som brukes for detekteringen.
 PATH_TO_CKPT = modell + '/frozen_inference_graph.pb'
 
 # - List of the strings that is used to add correct label for each box.
 label_path = os.path.join('training', 'training_ob-det.pbtxt')
 
-# - Laster inn en(frozen) Tensorflow model into memory
+# - Laster inn en (frozen) Tensorflow model
 detection_graph = tf.Graph()
 with detection_graph.as_default():
   od_graph_def = tf.GraphDef()
@@ -37,10 +39,7 @@ with detection_graph.as_default():
     tf.import_graph_def(od_graph_def, name = '')
 
 # - Load label map
-# Label maps map indices to category names, so that when our CNN predicts "1", 
-# vet vi at dette er en "person". 
-# Here we use internal utility functions, but anything that returns a dictionary mapping integers to appropriate string labels would be fine
-
+# Når CNN predikerer verdien "1" så vet vi at dette er en "person". 
 label_map = label_map_util.load_labelmap(label_path)
 categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes = 1, use_display_name = True)
 category_index = label_map_util.create_category_index(categories)
@@ -54,15 +53,13 @@ def circle_draw(frame, x,y):
 with detection_graph.as_default():
   with tf.Session(graph = detection_graph) as sess:
     while True:
-	
       ret, frame = cap.read()
-
       # - størrelse på display-vindu
       im_w = 720
       im_h = 576
       cv2.resize(frame, (im_w, im_h))
-      
-      # - Expand dimensions since the model expects images to have shape: [1, None, None, 3]
+    
+      # - bruker expand_dims for å endre formen på frame fra (1080, 1920, 3) til (1, 1080, 1920, 3)
       frame_expanded = numpy.expand_dims(frame, axis = 0)
       image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
       
@@ -123,6 +120,6 @@ with detection_graph.as_default():
 
       cv2.imshow('', cv2.resize(frame, (im_w, im_h))) # - viser detektering ++ i sanntid
       if cv2.waitKey(10) & 0xFF == ord('q'):
+	cv2.destroyAllWindows()
+	cap.release()
         break
-cv2.destroyAllWindows()
-cap.release()
