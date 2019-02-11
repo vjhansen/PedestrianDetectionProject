@@ -27,11 +27,10 @@ git reset --hard ea6d6aa && \
 /usr/local/bin/protoc object_detection/protos/*.proto --python_out=. && \
 cp -R object_detection /floyd/home/kode && cp -R slim /floyd/home/kode
 ```
-(^kjør denne på nytt hvis: 
+^kjør denne på nytt hvis: 
 can't open file 'object_detection/builders/model_builder_test.py': [Errno 2] No such file or directory
-)
 
-*Bruker en tidligere commit av TensorFlow/Models/research*
+*Bruker en tidligere commit (git reset --hard ea6d6aa) av TensorFlow/Models/research*
 ```
 rm -rf /floyd/home/kode/models
 export PYTHONPATH=$PYTHONPATH:/floyd/home/kode/object_detection/:/floyd/home/kode/slim
