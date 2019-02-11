@@ -26,11 +26,13 @@ cd models/research && \
 git reset --hard ea6d6aa && \
 /usr/local/bin/protoc object_detection/protos/*.proto --python_out=. && \
 cp -R object_detection /floyd/home/kode && cp -R slim /floyd/home/kode
-
+```
 (^kjør denne på nytt hvis: 
 can't open file 'object_detection/builders/model_builder_test.py': [Errno 2] No such file or directory
 )
 
+*Bruker en tidligere commit av TensorFlow/Models/research*
+```
 rm -rf /floyd/home/kode/models
 export PYTHONPATH=$PYTHONPATH:/floyd/home/kode/object_detection/:/floyd/home/kode/slim
 cd /floyd/home/kode && python object_detection/builders/model_builder_test.py
@@ -79,13 +81,14 @@ mkdir tensorboard_data
 
 cd /floyd/home/kode
 python train.py --logtostderr --train_dir=/floyd/home/tensorboard_data --pipeline_config_path=training/ssd_mobilenet_v1_coco.config
+```
 
-
-
-Tensorboard
+**Tensorboard**
+Visualisering av trening/evaluering.
+Du kan evt. trykke på TensorBoard-knappen nederst på skjermen (ved cpu-% osv)
+```
 cp -R training/ /floyd/home
 tensorboard --logdir='floyd/home/tensorboard_data'
-eller trykk på TensorBoard-knappen nederst på skjermen (ved cpu-% osv)
 ```
 
 ### 5) Testing/evaluering
@@ -107,6 +110,4 @@ python3 export_inference_graph.py \
     --output_directory pdp_alpha_inference_graph
 
 # velg model.ckpt-'største nr' (meta)
-
 ```
-
