@@ -113,6 +113,7 @@ Hvis du får trøbbel:
 ```
 export PYTHONPATH=$PYTHONPATH:/floyd/home/kode/object_detection/:/floyd/home/kode/slim
 ```
+Avslutt trening og evaluering med: CTRL+C
 
 
 ### 6) eksportere inference graph
