@@ -109,6 +109,11 @@ python eval.py \
     --checkpoint_dir=/floyd/home/tensorboard_data  \
     --eval_dir=eval/
 ```
+Hvis du får trøbbel:
+```
+export PYTHONPATH=$PYTHONPATH:/floyd/home/kode/object_detection/:/floyd/home/kode/slim
+```
+
 
 ### 6) eksportere inference graph
 Gjør dette når du er fornøyd med treningen. F.eks. Losses/TotalLoss inne på TensorBoard < 1.1.
