@@ -1,7 +1,7 @@
 # PedestrianDetectionProject - bachelor 19, automasjon, UiT
 Oppsett: Steg 1 - 3 (~15 minutter)
 
-Trening og Evaluering: Steg 4 - 5 (~xx- 15min)
+Trening og Evaluering: Steg 4 - 5 (~4.5 timer)
 
 ### 1) Oppsett - FloydHub 
 - Åpne en Workspace
