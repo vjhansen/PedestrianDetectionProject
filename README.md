@@ -128,3 +128,4 @@ python3 export_inference_graph.py \
 
 # velg model.ckpt-'største nr', f.eks. model.ckpt-13983 (ikke ta med .meta)
 ```
+Last ned mappen: --> home --> kode --> pdp_alpha_inference_graph
