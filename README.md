@@ -1,6 +1,8 @@
 # PedestrianDetectionProject - bachelor 19, automasjon, UiT
+Oppsett: Steg 1 - 3 (~15 minutter)
+Trening og Evaluering: Steg 4 - 5 (~xx- 15min)
 
-### 1) Oppsett - FloydHub
+### 1) Oppsett - FloydHub 
 - Åpne en Workspace
 - Velg Environment: TensorFlow 1.12, Machine: GPU
 - Åpne Terminal fra Launcher/Other
