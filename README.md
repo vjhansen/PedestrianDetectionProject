@@ -70,7 +70,7 @@ Struktur
 ```
 kode
 |--> data
-|   |--> test.record (ligger på onedrive)
+|   |--> eval.record (ligger på onedrive)
 |   |--> train.record (ligger på onedrive)
 |   
 |--> training
