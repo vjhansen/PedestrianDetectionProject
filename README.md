@@ -47,8 +47,7 @@ OK
 ### 2) Laste ned modellen SSDLite MobileNet V2 fra Tensorflow detection model zoo.
 
 ```
- cd /floyd/home/kode/object_detection
- # kan egentlig bare lagres i /kode
+ cd /floyd/home/kode
  wget http://download.tensorflow.org/models/object_detection/ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz
  tar xf ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz
 
@@ -80,6 +79,7 @@ kode
 ### 4) Trening
 ```
 cd /floyd/home/
+pip install --upgrade pip
 pip -q install pycocotools
 mkdir tensorboard_data
 
