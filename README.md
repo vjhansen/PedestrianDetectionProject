@@ -96,6 +96,7 @@ tensorboard --logdir='floyd/home/tensorboard_data'
 ```
 
 ### 5) Testing/evaluering
+Gjør dette når du er fornøyd med treningen. F.eks. Losses/TotalLoss inne på TensorBoard < 1.1.
 ```
 python eval.py \
     --logtostderr \
