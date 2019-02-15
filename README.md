@@ -126,5 +126,5 @@ python3 export_inference_graph.py \
     --trained_checkpoint_prefix /floyd/home/tensorboard_data/model.ckpt-xxx \
     --output_directory pdp_alpha_inference_graph
 
-# velg model.ckpt-'største nr' (meta)
+# velg model.ckpt-'største nr', f.eks. model.ckpt-13983 (ikke ta med .meta)
 ```
