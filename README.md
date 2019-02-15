@@ -64,6 +64,7 @@ OK
 cd /floyd/home/kode/
 mkdir training
 ```
+Struktur
 ```
 kode
 |--> data
