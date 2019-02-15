@@ -99,7 +99,7 @@ tensorboard --logdir='floyd/home/tensorboard_data'
 ```
 
 ### 5) Testing/evaluering
-Kan kjøres samtidig som treningen i steg 4 starter. Vi venter til TotalLoss < 2. 
+Kan kjøres samtidig som treningen i steg 4 starter. Vi venter til TotalLoss < 3. 
 Bare åpne et ny terminal-vindu inne på FloydHub.
 ```
 cd /floyd/home/kode
