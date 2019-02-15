@@ -99,7 +99,8 @@ tensorboard --logdir='floyd/home/tensorboard_data'
 ```
 
 ### 5) Testing/evaluering
-Gjør dette når du er fornøyd med treningen. F.eks. Losses/TotalLoss inne på TensorBoard < 1.1.
+Kan kjøres samtidig som steg 4. 
+Bare åpne en ny terminal.
 ```
 python eval.py \
     --logtostderr \
@@ -109,6 +110,7 @@ python eval.py \
 ```
 
 ### 6) eksportere inference graph
+Gjør dette når du er fornøyd med treningen. F.eks. Losses/TotalLoss inne på TensorBoard < 1.1.
 ```
 cd kode
 python3 export_inference_graph.py \
