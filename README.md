@@ -99,8 +99,8 @@ tensorboard --logdir='floyd/home/tensorboard_data'
 ```
 
 ### 5) Testing/evaluering
-Kan kjøres samtidig som steg 4. 
-Bare åpne en ny terminal.
+Kan kjøres samtidig som treningen i steg 4 starter. Vi venter til TotalLoss < 2. 
+Bare åpne et ny terminal-vindu inne på FloydHub.
 ```
 cd /floyd/home/kode
 python eval.py \
@@ -116,7 +116,7 @@ export PYTHONPATH=$PYTHONPATH:/floyd/home/kode/object_detection/:/floyd/home/kod
 
 
 ### 6) eksportere inference graph
-Gjør dette når du er fornøyd med treningen. F.eks. Losses/TotalLoss inne på TensorBoard < 1.1.
+Gjør dette når du er fornøyd med treningen. F.eks. når Losses/TotalLoss < 1.5, og PascalBoxes_Precision/mAP@0.5IOU > 0.85. (følg med på utviklingen inne på TensorBoard)
 ```
 cd kode
 python3 export_inference_graph.py \
