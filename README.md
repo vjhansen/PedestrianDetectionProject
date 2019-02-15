@@ -1,8 +1,8 @@
 # PedestrianDetectionProject - bachelor 19, automasjon, UiT
 
 ### 1) Oppsett - FloydHub
-- Create Workspace
-- Environment: TensorFlow 1.12, Machine: GPU
+- Åpne en Workspace
+- Velg Environment: TensorFlow 1.12, Machine: GPU
 - Åpne Terminal fra Launcher/Other
 
 ```sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-upgrade```
@@ -52,6 +52,7 @@ OK
  wget http://download.tensorflow.org/models/object_detection/ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz
  tar xf ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz
 
+#old...
 # wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_2018_01_28.tar.gz
 # tar xf ssd_mobilenet_v1_coco_2018_01_28.tar.gz
 # git clone https://github.com/vjhansen/pdp-bachelor.git (senere, privat nå)
@@ -70,8 +71,8 @@ kode
 |   |--> train.record (ligger på onedrive)
 |   
 |--> training
-|   |--> ssd_mobilenet_v1_coco.config
-|   |--> training_ob-det.pbtxt
+|   |--> ssdlite_mobilenet_v2_coco.config
+|   |--> ob-det.pbtxt
 
 ```
 
@@ -82,7 +83,7 @@ pip -q install pycocotools
 mkdir tensorboard_data
 
 cd /floyd/home/kode
-python train.py --logtostderr --train_dir=/floyd/home/tensorboard_data --pipeline_config_path=training/ssd_mobilenet_v1_coco.config
+python train.py --logtostderr --train_dir=/floyd/home/tensorboard_data --pipeline_config_path=training/ssdlite_mobilenet_v2_coco.config
 ```
 
 **Tensorboard**
@@ -97,7 +98,7 @@ tensorboard --logdir='floyd/home/tensorboard_data'
 ```
 python eval.py \
     --logtostderr \
-    --pipeline_config_path=training/ssd_mobilenet_v1_coco.config \
+    --pipeline_config_path=training/ssdlite_mobilenet_v2_coco.config \
     --checkpoint_dir=/floyd/home/tensorboard_data  \
     --eval_dir=eval/
 ```
@@ -107,7 +108,7 @@ python eval.py \
 cd kode
 python3 export_inference_graph.py \
     --input_type image_tensor \
-    --pipeline_config_path training/ssd_mobilenet_v1_coco.config \
+    --pipeline_config_path training/ssdlite_mobilenet_v2_coco.config \
     --trained_checkpoint_prefix /floyd/home/tensorboard_data/model.ckpt-xxx \
     --output_directory pdp_alpha_inference_graph
 
