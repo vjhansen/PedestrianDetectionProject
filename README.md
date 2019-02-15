@@ -102,6 +102,7 @@ tensorboard --logdir='floyd/home/tensorboard_data'
 Kan kjøres samtidig som steg 4. 
 Bare åpne en ny terminal.
 ```
+cd /floyd/home/kode
 python eval.py \
     --logtostderr \
     --pipeline_config_path=training/ssdlite_mobilenet_v2_coco.config \
