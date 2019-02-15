@@ -44,7 +44,7 @@ Ran 15 tests in 0.xxxs
 OK
 ```
 
-### 2) Laste ned modell fra Tensorflow detection model zoo.
+### 2) Laste ned modellen SSDLite MobileNet V2 fra Tensorflow detection model zoo.
 
 ```
  cd /floyd/home/kode/object_detection
