@@ -1,5 +1,5 @@
 # PDP - Bachelor 19, AUT, UiT
-# update: 21.02, victor
+# update: 25.02, victor
 
 
 # kode bygger på 
@@ -12,6 +12,7 @@ import os
 import cv2
 import tensorflow as TF
 import serial # - kommunikasjon med Arduino
+import struct
 
 from collections import defaultdict
 from io import StringIO
@@ -24,7 +25,8 @@ from utils import visualization_utils as vis_util
 
 ### - VIDEO
 #cap = cv2.VideoCapture(0) # - usbkamera/webcam: forsøk (-1), (0) eller (1)
-cap = cv2.VideoCapture('a1.mp4') # - teste video
+
+#cap = cv2.VideoCapture('a1.mp4') # - teste video
 #fourcc = cv2.VideoWriter_fourcc('m','p','4','v')
 #fourcc = cv2.VideoWriter_fourcc(*'mpeg')
 #output_vid  = cv2.VideoWriter('test_out.mp4', 0x7634706d, 24, (1920,1080), True)
@@ -32,8 +34,9 @@ cap = cv2.VideoCapture('a1.mp4') # - teste video
 
 ### - SERIELL KOMMUNIKASJON
 SERIAL_PORT1 = 'dev/ttys0'
-SERIAL_PORT2 = 'dev/tty.usbserial'
-ser = serial.Serial(SERIAL_PORT1, 9600) # - Åpne serialport for komm. med Arduino
+SERIAL_PORT2 = '/dev/tty.usbmodem14101'
+ser = serial.Serial(port = SERIAL_PORT2, baudrate = 9600) # - Åpne serialport for komm. med Arduino
+time.sleep(2)
 
 
 ### - MODELL
@@ -72,6 +75,8 @@ with detection_graph.as_default():
         im_h = 320
 
         cv2.resize(frame, (im_w,im_h))
+        
+        # muligens flip frame = cv2.flip(frame,0) for å fikse koordinatsystem
         
         #output_vid.open('test_out.mp4', fourcc,20, (1280,720), True)
 
@@ -120,15 +125,22 @@ with detection_graph.as_default():
         W = (frame.shape[1]) # - horisontal
         H = (frame.shape[0]) # - vertikal
         
-        # - Tegner sirkel i sentrum av bounding box med høyeste score
-        for i in range(min(max_bbx, boxes.shape[0])):
-            if numpy.squeeze(scores)[i] > score_thresh:
-                xCenter = int((xmax + xmin)*W / 2.0)
-                yCenter = int((ymax + ymin)*H / 2.0)
-                (bbx_ymin, bbx_xmin, bbx_ymax, bbx_xmax) = (int(ymin*H), int(xmin*W), int(ymax*H), int(xmax*W))
-                #cv2.circle(frame, (xCenter,yCenter), 5, (0,0,255), -1)
-                #cv2.rectangle(frame, (bbx_xmin, bbx_ymin), (bbx_xmax, bbx_ymax), (0,255,0), 4)
-                #ser.write(xCenter,yCenter) # - skriver koord. til Arduino
+        try:
+          # - Tegner sirkel i sentrum av bounding box med høyeste score
+          for i in range(min(max_bbx, boxes.shape[0])):
+              if numpy.squeeze(scores)[i] > score_thresh:
+                  xCenter = int((xmax + xmin)*W / 2.0)
+                  yCenter = int((ymax + ymin)*H / 2.0)
+                  
+                  
+                  (bbx_ymin, bbx_xmin, bbx_ymax, bbx_xmax) = (int(ymin*H), int(xmin*W), int(ymax*H), int(xmax*W))
+                  #cv2.circle(frame, (xCenter,yCenter), 5, (0,0,255), -1)
+                  #cv2.rectangle(frame, (bbx_xmin, bbx_ymin), (bbx_xmax, bbx_ymax), (0,255,0), 4)
+                  ser.write(xCenter,yCenter) # - skriver koord. til Arduino
+        
+        exept:
+          pass
+        
         fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)
         cv2.putText(frame, "FPS: " +str(int(fps)), (100,50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50,170,50), 2)
         cv2.imshow('Fotgjengerdetektering', cv2.resize(frame,(im_w, im_h)))
@@ -138,3 +150,4 @@ with detection_graph.as_default():
 cv2.destroyAllWindows()
 cap.release()
 #output_vid.release()
+ser.close()
