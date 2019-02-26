@@ -1,32 +1,58 @@
+// 26.feb
+// https://www.instructables.com/id/FACE-TRACKING-USING-ARDUINO-/
+
 #include <Servo.h>
 
 Servo servo_pan, servo_tilt;
-int data_x = 0;
-int data_y = 0;
-int data[1];
+int x, prevX, y, prevY;
 
 void setup() {
-    Serial.begin(9600);
-    servo_pan.attach(10);     // - PIN 9
-    servo_tilt.attach(9);     // - PIN 10
-
-    // - startpos
-    servo_pan.write(90); 
-    servo_tilt.write(40);
+  Serial.begin(9600);
+  servo_pan.attach(10);
+  servo_tilt.attach(9);
+  servo_pan.write(90);
+  servo_tilt.write(40);
 }
 
 void loop() {
-  while (Serial.available() >= 2) {
-    for (int i = 0; i < 2; i++) {
-      data[i] = Serial.read();
+  if (Serial.available() > 0) 
+  {
+    if (Serial.read() == 'X') 
+    {
+      x = parseInt();
+      Serial.println(x);
+      if (Serial.read() == 'Y') 
+      {
+        y = parseInt();
+        Serial.println(y);
+        moveCam();
       }
-      
-      servo_pan.write(data[0]);
-      delay(20);
-      servo_tilt.write(data[1]);
-      delay(20);
-    
-      Serial.println(data[0]);
-      Serial.println(data[1]);
+     }
+     while(Serial.available() > 0) 
+     {
+        Serial.read();
+     }
     }
+ }
+
+ void moveCam() {
+  if (prevX != x || prevY != y)
+  {
+    prevX = x;
+    prevY = y;
+
+    // map(value, fromLow, fromHigh, toLow, toHigh)
+    // https://www.arduino.cc/reference/en/language/functions/math/map/
+    
+      // må teste her, setter min/max verdier for servoene
+      int servoX = map(x, 600, 0, 70, 179);
+      int servoY = map(y, 450, 0, 179, 95);
+    
+    servoX = min(servoX, 179);
+    servoX = max(servoX, 70);
+    servoY = min(servoY, 180);
+    servoY = max(servoY, 95);
+    servo_pan.write(servoX);
+    servo_tilt.write(servoY);
+  }
 }
