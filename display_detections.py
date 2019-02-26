@@ -1,5 +1,5 @@
 # PDP - Bachelor 19, AUT, UiT
-# update: 25.02, victor
+# update: 26.02, victor
 
 
 # kode bygger på 
@@ -24,7 +24,8 @@ from utils import visualization_utils as vis_util
 
 
 ### - VIDEO
-#cap = cv2.VideoCapture(0) # - usbkamera/webcam: forsøk (-1), (0) eller (1)
+cap = cv2.VideoCapture(0) # - usbkamera/webcam: forsøk (-1), (0) eller (1)
+print ('[info]: Kamera tilkoblet')
 
 #cap = cv2.VideoCapture('a1.mp4') # - teste video
 #fourcc = cv2.VideoWriter_fourcc('m','p','4','v')
@@ -33,10 +34,12 @@ from utils import visualization_utils as vis_util
 
 
 ### - SERIELL KOMMUNIKASJON
+# disse seriellportene endres fra maskin til maskin
 SERIAL_PORT1 = 'dev/ttys0'
 SERIAL_PORT2 = '/dev/tty.usbmodem14101'
 ser = serial.Serial(port = SERIAL_PORT2, baudrate = 9600) # - Åpne serialport for komm. med Arduino
 time.sleep(2)
+print ('[info]: Oppretter seriell kommunikasjon')
 
 
 ### - MODELL
@@ -57,7 +60,9 @@ with detection_graph.as_default():
     serialized_graph = fid.read()
     od_graph_def.ParseFromString(serialized_graph)
     TF.import_graph_def(od_graph_def, name = '')
-
+    
+print('[info]: Laster inn modell')
+     
 # - Load label map
 # Når CNN predikerer verdien "1" så vet vi at dette er en "person". 
 label_map = label_map_util.load_labelmap(label_path)
@@ -71,10 +76,11 @@ with detection_graph.as_default():
       while True:
         ret, frame = cap.read()
         timer = cv2.getTickCount()
-        im_w = 640
+        im_w = 480
         im_h = 320
 
         cv2.resize(frame, (im_w,im_h))
+        frame =cv2.flip(frame,1)
         
         # muligens flip frame = cv2.flip(frame,0) for å fikse koordinatsystem
         
@@ -100,7 +106,7 @@ with detection_graph.as_default():
           feed_dict = {image_tensor: frame_expanded})
 
         score_thresh = 0.6  # - nedre grense for prediction-score
-        max_bbx = 20        # - maks. antall bounding boxes som skal tegnes
+        max_bbx = 5        # - maks. antall bounding boxes som skal tegnes
 
         # - Visualisering av detekteringen
         # - numpy.squeeze fjerner 1 dimensjonale oppføringer fra formen på input-array
@@ -132,11 +138,13 @@ with detection_graph.as_default():
                   xCenter = int((xmax + xmin)*W / 2.0)
                   yCenter = int((ymax + ymin)*H / 2.0)
                   
-                  
                   (bbx_ymin, bbx_xmin, bbx_ymax, bbx_xmax) = (int(ymin*H), int(xmin*W), int(ymax*H), int(xmax*W))
-                  #cv2.circle(frame, (xCenter,yCenter), 5, (0,0,255), -1)
+                  cv2.circle(frame, (xCenter,yCenter), 5, (0,0,255), -1)
                   #cv2.rectangle(frame, (bbx_xmin, bbx_ymin), (bbx_xmax, bbx_ymax), (0,255,0), 4)
-                  ser.write(xCenter,yCenter) # - skriver koord. til Arduino
+                  output_coords = 'X{0:d}Y{1:d}'.format(xCenter,yCenter)
+                  print(output_coords)
+                  ser.write(output_coords) # - skriver koord. til Arduino
+                  print(ser.readline())
         
         exept:
           pass
