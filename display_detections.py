@@ -1,6 +1,5 @@
 # PDP - Bachelor 19, AUT, UiT
-# update: 26.02, victor
-
+# update: 04.03
 
 # kode bygger på 
 # https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
@@ -22,7 +21,6 @@ sys.path.append("..")
 from utils import label_map_util
 from utils import visualization_utils as vis_util
 
-
 ### - VIDEO
 cap = cv2.VideoCapture(0) # - usbkamera/webcam: forsøk (-1), (0) eller (1)
 print ('[info]: Kamera tilkoblet')
@@ -32,12 +30,10 @@ print ('[info]: Kamera tilkoblet')
 #fourcc = cv2.VideoWriter_fourcc(*'mpeg')
 #output_vid  = cv2.VideoWriter('test_out.mp4', 0x7634706d, 24, (1920,1080), True)
 
-
 ### - SERIELL KOMMUNIKASJON
-# disse seriellportene endres fra maskin til maskin
 SERIAL_PORT1 = 'dev/ttys0'
 SERIAL_PORT2 = '/dev/tty.usbmodem14101'
-ser = serial.Serial(port = SERIAL_PORT2, baudrate = 9600) # - Åpne serialport for komm. med Arduino
+arduino = serial.Serial(port = SERIAL_PORT2, baudrate = 9600) # - Åpne serialport for komm. med Arduino
 time.sleep(2)
 print ('[info]: Oppretter seriell kommunikasjon')
 
@@ -69,8 +65,6 @@ label_map = label_map_util.load_labelmap(label_path)
 categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes = 1, use_display_name = True)
 category_index = label_map_util.create_category_index(categories)
 
-
-### - WHILE
 with detection_graph.as_default():
     with TF.Session(graph = detection_graph) as sess:
       while True:
@@ -79,11 +73,8 @@ with detection_graph.as_default():
         im_w = 480
         im_h = 320
 
-        cv2.resize(frame, (im_w,im_h))
-        frame =cv2.flip(frame,1)
-        
-        # muligens flip frame = cv2.flip(frame,0) for å fikse koordinatsystem
-        
+        #cv2.resize(frame, (im_w,im_h))
+  
         #output_vid.open('test_out.mp4', fourcc,20, (1280,720), True)
 
         image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
@@ -106,7 +97,7 @@ with detection_graph.as_default():
           feed_dict = {image_tensor: frame_expanded})
 
         score_thresh = 0.6  # - nedre grense for prediction-score
-        max_bbx = 5        # - maks. antall bounding boxes som skal tegnes
+        max_bbx = 1        # - maks. antall bounding boxes som skal tegnes
 
         # - Visualisering av detekteringen
         # - numpy.squeeze fjerner 1 dimensjonale oppføringer fra formen på input-array
@@ -131,31 +122,26 @@ with detection_graph.as_default():
         W = (frame.shape[1]) # - horisontal
         H = (frame.shape[0]) # - vertikal
         
-        try:
-          # - Tegner sirkel i sentrum av bounding box med høyeste score
-          for i in range(min(max_bbx, boxes.shape[0])):
-              if numpy.squeeze(scores)[i] > score_thresh:
-                  xCenter = int((xmax + xmin)*W / 2.0)
-                  yCenter = int((ymax + ymin)*H / 2.0)
-                  
-                  (bbx_ymin, bbx_xmin, bbx_ymax, bbx_xmax) = (int(ymin*H), int(xmin*W), int(ymax*H), int(xmax*W))
-                  cv2.circle(frame, (xCenter,yCenter), 5, (0,0,255), -1)
-                  #cv2.rectangle(frame, (bbx_xmin, bbx_ymin), (bbx_xmax, bbx_ymax), (0,255,0), 4)
-                  output_coords = 'X{0:d}Y{1:d}'.format(xCenter,yCenter)
-                  print(output_coords)
-                  ser.write(output_coords) # - skriver koord. til Arduino
-                  print(ser.readline())
-        
-        exept:
-          pass
+        # - Tegner sirkel i sentrum av bounding box med høyeste score
+        for i in range(min(max_bbx, boxes.shape[0])):
+          if numpy.squeeze(scores)[i] > score_thresh:
+              (bbx_ymin, bbx_xmin, bbx_ymax, bbx_xmax) = (int(ymin*H), int(xmin*W), int(ymax*H), int(xmax*W))
+              xCenter = int((xmax + xmin)*W / 2.0)
+              yCenter = int((ymax + ymin)*H / 2.0)
+              cv2.circle(frame, (xCenter,yCenter), 5, (0,0,255), -1)
+              #cv2.rectangle(frame, (bbx_xmin, bbx_ymin), (bbx_xmax, bbx_ymax), (0,255,0), 4)
+              output_coords = 'X{0:d}Y{1:d}Z'.format(xCenter,yCenter)
+              print(output_coords)
+              arduino.write(output_coords.encode()) # - skriver koord. til Arduino
+              print(arduino.readline())
         
         fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)
         cv2.putText(frame, "FPS: " +str(int(fps)), (100,50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50,170,50), 2)
         cv2.imshow('Fotgjengerdetektering', cv2.resize(frame,(im_w, im_h)))
         #output_vid.write(frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if cv2.waitKey(10) & 0xFF == ord('q'):
           break
 cv2.destroyAllWindows()
 cap.release()
 #output_vid.release()
-ser.close()
+arduino.close()
