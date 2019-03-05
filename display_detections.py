@@ -72,9 +72,7 @@ with detection_graph.as_default():
         timer = cv2.getTickCount()
         im_w = 480
         im_h = 320
-
         #cv2.resize(frame, (im_w,im_h))
-  
         #output_vid.open('test_out.mp4', fourcc,20, (1280,720), True)
 
         image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
@@ -133,7 +131,6 @@ with detection_graph.as_default():
               output_coords = 'X{0:d}Y{1:d}Z'.format(xCenter,yCenter)
               print(output_coords)
               arduino.write(output_coords.encode()) # - skriver koord. til Arduino
-              print(arduino.readline())
         
         fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)
         cv2.putText(frame, "FPS: " +str(int(fps)), (100,50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50,170,50), 2)
