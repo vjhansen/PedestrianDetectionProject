@@ -11,7 +11,8 @@ git clone https://github.com/tensorflow/models.git
 sudo apt install python3-pip
 ```
 
-Legger *display_detections.py*, *pdp_final_model (folder)*, *training (folder)* og en .mp4-fil inn i /models/research/object_detection
+Legger *display_detections.py*, *pdp_final_model (folder)**, *training (folder)* og en .mp4-fil inn i /models/research/object_detection
+* last heller ned pdp_17k_inference_graph, og legg den inn i /models/research/object_detection
 
 
 ### 2) Svært viktig steg
