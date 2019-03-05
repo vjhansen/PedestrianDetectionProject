@@ -3,8 +3,7 @@
 
 numpy
 tensorflow
-tensorboard
 pyserial
 opencv-python
-Keras-Applications
-Keras-Preprocessing
+matplotlib
+
