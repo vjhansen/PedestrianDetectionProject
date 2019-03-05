@@ -1,4 +1,6 @@
 # PedestrianDetectionProject - bachelor 19, automasjon, UiT
+Victor J. Hansen & Kato S. Karlsen.
+
 
 ### 1)
 Krever GNU/Linux eller macOS.
