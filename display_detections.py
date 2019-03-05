@@ -1,5 +1,5 @@
 # PDP - Bachelor 19, AUT, UiT
-# update: 04.03
+# update: 05.03
 
 # kode bygger på 
 # https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
@@ -14,8 +14,6 @@ import serial # - kommunikasjon med Arduino
 import struct
 
 from collections import defaultdict
-from io import StringIO
-from matplotlib import pyplot as plt
 
 sys.path.append("..")
 from utils import label_map_util
@@ -31,15 +29,15 @@ print ('[info]: Kamera tilkoblet')
 #output_vid  = cv2.VideoWriter('test_out.mp4', 0x7634706d, 24, (1920,1080), True)
 
 ### - SERIELL KOMMUNIKASJON
-SERIAL_PORT1 = 'dev/ttys0'
-SERIAL_PORT2 = '/dev/tty.usbmodem14101'
-arduino = serial.Serial(port = SERIAL_PORT2, baudrate = 9600) # - Åpne serialport for komm. med Arduino
+arduino = serial.Serial(port = '/dev/tty.usbmodem14101', baudrate = 9600, timeout=1) # - Åpne serialport for komm. med Arduino
 time.sleep(2)
-print ('[info]: Oppretter seriell kommunikasjon')
+arduino.flush()
+print ('[info]: Oppretter seriell kommunikasjon med Arduino')
 
 
 ### - MODELL
 # - laster inn ferdigtrent modell
+
 modell = 'pdp_final_modell/pdp_modell_15_02_19_14k'
 
 # - Frozen detection graph. Dette er modellen som brukes for detekteringen.
@@ -57,7 +55,7 @@ with detection_graph.as_default():
     od_graph_def.ParseFromString(serialized_graph)
     TF.import_graph_def(od_graph_def, name = '')
     
-print('[info]: Laster inn modell')
+print('[info]: Laster inn Tensorflow-modell')
      
 # - Load label map
 # Når CNN predikerer verdien "1" så vet vi at dette er en "person". 
