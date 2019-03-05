@@ -6,7 +6,7 @@ Krever GNU/Linux eller macOS.
 
 ### 2) Installere Python-pakker
 ```
-pip3 install numpy
+pip3 install -r requirements.txt
 
 ```
 
