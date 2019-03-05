@@ -14,7 +14,7 @@ sudo apt install python3-pip
 Legger *display_detections.py*, *pdp_final_model (folder)*, *training (folder)* og en .mp4-fil inn i /models/research/object_detection
 
 
-### 2)
+### 2) Svært viktig steg
 ```
 sudo apt install protobuf-compiler
 
@@ -33,6 +33,7 @@ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 pip3 install -r requirements.txt
 
 ```
+evt. sjekk hva du ikke har fra før av som er i requirements.txt
 
 
 
