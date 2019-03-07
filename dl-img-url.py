@@ -1,4 +1,4 @@
-# dl-img-url.py 
+# kan brukes for å laste ned bilder + gjøre bilde svart/hvit + renaming
 
 import os, cv2
 import urllib.request as urlreq
@@ -14,7 +14,7 @@ for i in img_urls.split('\n'):
     try:
         print(i)
         urlreq.urlretrieve(i, "datasett/"+str(img_num)+".jpg")
-        img = cv2.imread("datasett/"+str(img_num)+".jpg",cv2.IMREAD_GRAYSCALE) #gjør bildene svart/hvit
+        img = cv2.imread("datasett/"+str(img_num)+".jpg",cv2.IMREAD_GRAYSCALE) # gjør bildene svart/hvit
         cv2.imwrite("datasett/"+str(img_num)+".jpg",img)
         print(img_num)
         img_num += 1
