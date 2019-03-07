@@ -6,7 +6,7 @@ Victor J. Hansen & Kato S. Karlsen.
 Krever GNU/Linux eller macOS.
 
 ```
-cd til skrivebord
+cd Skrivebord eller Desktop
 sudo apt install git
 git clone https://github.com/tensorflow/models.git
 sudo apt install python3-pip
