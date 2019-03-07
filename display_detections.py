@@ -143,6 +143,7 @@ with detection_graph.as_default():
               print(output_coords)
               log = 'log.txt'
               arduino.write(output_coords.encode()) # - skriver koord. til Arduino
+              ##
               with open(os.path.join('/Users/victor/Desktop/pdp_local/logging',log),'w') as logfile:
                 logfile.write(sttime + txt_detect + '\n')
 
