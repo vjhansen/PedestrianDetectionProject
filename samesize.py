@@ -1,4 +1,3 @@
-# Victor Hansen
 # 15.01.19
 # python3
 
@@ -9,7 +8,6 @@ import numpy as np
 
 src_folder = "folder/"
 dst_folder = "resized_folder/"
-
 files_in_dir = os.listdir(src_folder)
 img_num = 1
 if not os.path.exists(dst_folder):
