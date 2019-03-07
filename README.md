@@ -3,7 +3,7 @@ Victor J. Hansen & Kato S. Karlsen.
 
 
 ### 1)
-Krever GNU/Linux eller macOS.
+Testet med Ubuntu 18.04 LTS og 18.10
 
 ```
 cd Skrivebord eller Desktop
@@ -12,8 +12,7 @@ git clone https://github.com/tensorflow/models.git
 sudo apt install python3-pip
 ```
 
-Legger *display_detections.py*, *pdp_final_model (folder)**, *training (folder)* og en .mp4-fil inn i /models/research/object_detection
-* last heller ned pdp_17k_inference_graph, og legg den inn i /models/research/object_detection
+Legger *display_detections.py*, *pdp_17k_inference_graph (folder)**, *training (folder)* inn i /models/research/object_detection
 
 
 ### 2) Svært viktig steg
@@ -26,21 +25,18 @@ protoc object_detection/protos/*.proto --python_out=.
 
 export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 
-
 ```
 
 
-### 3) Installere Python-pakker
+### 3) Installere
 ```
+cd /models/research/object_detection
+#git clone https://github.com/vjhansen/pdp-bachelor.git (privat)
 pip3 install -r requirements.txt
-
 ```
-evt. sjekk hva du ikke har fra før av som er i requirements.txt
-
 
 
 ### 4) Kjøre program
 ```
- cd /models/research/object_detection
  python3 display_detections.py
 ```
