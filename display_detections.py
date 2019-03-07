@@ -1,5 +1,5 @@
 # PDP - Bachelor 19, AUT, UiT
-# update: 05.03
+# update: 07.03
 
 # kode bygger på 
 # https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
@@ -13,6 +13,7 @@ import tensorflow as TF
 import serial # - kommunikasjon med Arduino
 import struct
 
+from datetime import datetime
 from collections import defaultdict
 
 sys.path.append("..")
@@ -24,9 +25,12 @@ cap = cv2.VideoCapture(0) # - usbkamera/webcam: forsøk (-1), (0) eller (1)
 print ('[info]: Kamera tilkoblet')
 
 #cap = cv2.VideoCapture('a1.mp4') # - teste video
+
+# For lagring av video
 #fourcc = cv2.VideoWriter_fourcc('m','p','4','v')
 #fourcc = cv2.VideoWriter_fourcc(*'mpeg')
 #output_vid  = cv2.VideoWriter('test_out.mp4', 0x7634706d, 24, (1920,1080), True)
+
 
 ### - SERIELL KOMMUNIKASJON
 arduino = serial.Serial(port = '/dev/tty.usbmodem14101', baudrate = 9600, timeout=1) # - Åpne serialport for komm. med Arduino
@@ -35,10 +39,14 @@ arduino.flush()
 print ('[info]: Oppretter seriell kommunikasjon med Arduino')
 
 
+# For lagring av bilder
+if not os.path.exists('detection_pics'):
+  os.makedirs('detection_pics')
+count = 0
+
 ### - MODELL
 # - laster inn ferdigtrent modell
-
-modell = 'pdp_final_modell/pdp_modell_15_02_19_14k'
+modell = 'pdp_17k_inference_graph'
 
 # - Frozen detection graph. Dette er modellen som brukes for detekteringen.
 PATH_TO_CKPT = modell + '/frozen_inference_graph.pb'
@@ -70,7 +78,10 @@ with detection_graph.as_default():
         timer = cv2.getTickCount()
         im_w = 480
         im_h = 320
+
+        sttime = datetime.now().strftime('%d.%m.%Y - %H:%M:%S - ')
         #cv2.resize(frame, (im_w,im_h))
+  
         #output_vid.open('test_out.mp4', fourcc,20, (1280,720), True)
 
         image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
@@ -103,6 +114,7 @@ with detection_graph.as_default():
               numpy.squeeze(classes).astype(numpy.int32), 
               numpy.squeeze(scores),
               category_index,
+              use_normalized_coordinates=True
               max_boxes_to_draw = max_bbx, 
               min_score_thresh = score_thresh, 
               line_thickness = 5)
@@ -117,7 +129,7 @@ with detection_graph.as_default():
         # - W (bredde) og H (høyde) endres med oppløsningen på film/kamera
         W = (frame.shape[1]) # - horisontal
         H = (frame.shape[0]) # - vertikal
-        
+       
         # - Tegner sirkel i sentrum av bounding box med høyeste score
         for i in range(min(max_bbx, boxes.shape[0])):
           if numpy.squeeze(scores)[i] > score_thresh:
@@ -127,12 +139,22 @@ with detection_graph.as_default():
               cv2.circle(frame, (xCenter,yCenter), 5, (0,0,255), -1)
               #cv2.rectangle(frame, (bbx_xmin, bbx_ymin), (bbx_xmax, bbx_ymax), (0,255,0), 4)
               output_coords = 'X{0:d}Y{1:d}Z'.format(xCenter,yCenter)
+              txt_detect = 'Detected pedestrian'
               print(output_coords)
+              log = 'log.txt'
               arduino.write(output_coords.encode()) # - skriver koord. til Arduino
+              with open(os.path.join('/Users/victor/Desktop/pdp_local/logging',log),'w') as logfile:
+                logfile.write(sttime + txt_detect + '\n')
+
+              cv2.imwrite('detection_pics/'+sttime+'frame%d.jpg' % count, frame) # lagrer bilder som inneholder detektering
+
+              cv2.imwrite("frame.jpg", frame)     # nyeste bilde for html     
+              count += 1
         
-        fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)
+        fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)        
+        cv2.flip(frame,0)
         cv2.putText(frame, "FPS: " +str(int(fps)), (100,50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50,170,50), 2)
-        cv2.imshow('Fotgjengerdetektering', cv2.resize(frame,(im_w, im_h)))
+        cv2.imshow('SSDLite + MobileNetV2', cv2.resize(frame,(im_w, im_h)))
         #output_vid.write(frame)
         if cv2.waitKey(10) & 0xFF == ord('q'):
           break
