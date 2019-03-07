@@ -1,4 +1,4 @@
-# speiler bilder
+# speiler bilder, brukes for å øke størrelsen på datasett
 
 import os, sys, cv2, numpy
 
