@@ -19,10 +19,10 @@ int prevY = 0; //- previous y-value
 
 int Xval = 0;       //- store x data from serial port
 int Yval = 0;       //- store y data from serial port
-float SERVO_PAN_POS  = 0;
-float SERVO_TILT_POS = 0;
-int errorX = 10;  //- significant increments of horizontal (x) camera movement
-int errorY = 10;  //- significant increments of vertical (y) camera movement
+float NEW_SERVO_PAN_POS  = 0;
+float NEW_SERVO_TILT_POS = 0;
+int errorX = 45;  //- significant increments of horizontal (x) camera movement
+int errorY = 45;  //- significant increments of vertical (y) camera movement
 
 Servo SERVO_PAN;
 Servo SERVO_TILT;
@@ -48,8 +48,8 @@ void loop () {
     }
 
     //- read last servos positions
-    SERVO_PAN_POS = SERVO_PAN.read();
-    SERVO_TILT_POS = SERVO_TILT.read();
+    NEW_SERVO_PAN_POS = SERVO_PAN.read();
+    NEW_SERVO_TILT_POS = SERVO_TILT.read();
 
     if (prevX != Xval || prevY != Yval) {
       prevX = Xval;
@@ -57,24 +57,31 @@ void loop () {
 
       //- if X-coord is to the left from middle
       if (Xval < (HORIZONTAL_PIXELS / 2 - errorX)) {
-        if (SERVO_PAN_POS >= errorX) SERVO_PAN_POS += incX; //- move to the left.
+        if (NEW_SERVO_PAN_POS >= errorX) NEW_SERVO_PAN_POS += incX; //- move to the left.
       }
       //- if X-coord is to the right from the middle
       else if (Xval > (HORIZONTAL_PIXELS / 2 + errorX)) {
-        if (SERVO_PAN_POS <= SERVO_PAN_MAX - errorX) SERVO_PAN_POS -= incX; //- move to the right.
-      }
-
-      //- if Y-coord is below midscreen
-      if (Yval < (VERTICAL_PIXELS / 2 - errorY)) {
-        if (SERVO_TILT_POS >= 20) SERVO_TILT_POS += incY;   //- tilt down
+        if (NEW_SERVO_PAN_POS <= SERVO_PAN_MAX - errorX) NEW_SERVO_PAN_POS -= incX; //- move to the right.
       }
 
       //- if Y-coord is above midscreen
-      else if (Yval > (VERTICAL_PIXELS / 2 + errorY)) {
-        if (SERVO_TILT_POS <= 50) SERVO_TILT_POS -= incY;   //-  tilt up
+      // y-aksen er invertert fra kartesisk
+      if (Yval > (VERTICAL_PIXELS / 2 - errorY)) {
+        if (NEW_SERVO_TILT_POS > 70) NEW_SERVO_TILT_POS += incY;   //- tilt up
       }
-      SERVO_PAN.write(SERVO_PAN_POS);
-      SERVO_TILT.write(SERVO_TILT_POS);
+
+      //- if Y-coord is below midscreen
+      else if (Yval < (VERTICAL_PIXELS / 2 + errorY)) {
+        if (NEW_SERVO_TILT_POS <= 95) NEW_SERVO_TILT_POS -= incY;   //-  tilt down
+      }
+      SERVO_TILT.attach(SERVO_TILT_PIN);
+      SERVO_PAN.attach(SERVO_PAN_PIN);
+      SERVO_PAN.write(NEW_SERVO_PAN_POS);
+      delay(250);
+      SERVO_PAN.detach();
+      SERVO_TILT.write(NEW_SERVO_TILT_POS);
+      delay(250);
+      SERVO_TILT.detach();
     }
   }
 }
