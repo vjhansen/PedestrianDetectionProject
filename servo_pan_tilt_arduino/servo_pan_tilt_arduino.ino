@@ -7,7 +7,7 @@
 #define  HORIZONTAL_PIXELS      1920    //- screen resolution
 #define  VERTICAL_PIXELS        1080    //- screen resolution
 #define  SERVO_PAN_INITIAL_POS  90      //- initial pan-pos
-#define  SERVO_TILT_INITIAL_POS 40      //- initial tilt-pos
+#define  SERVO_TILT_INITIAL_POS 100      //- initial tilt-pos
 #define  SERVO_PAN_PIN          5
 #define  SERVO_TILT_PIN         6
 #define  baudrate               9600
