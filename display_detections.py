@@ -1,5 +1,5 @@
 # PDP - Bachelor 19, AUT, UiT
-# update: 07.03
+# update: 08.03
 
 # kode bygger på 
 # https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
@@ -23,21 +23,17 @@ from utils import visualization_utils as vis_util
 ### - VIDEO
 cap = cv2.VideoCapture(0) # - usbkamera/webcam: forsøk (-1), (0) eller (1)
 print ('[info]: Kamera tilkoblet')
-
 #cap = cv2.VideoCapture('a1.mp4') # - teste video
 
 # For lagring av video
-#fourcc = cv2.VideoWriter_fourcc('m','p','4','v')
-#fourcc = cv2.VideoWriter_fourcc(*'mpeg')
+#fourcc = cv2.VideoWriter_fourcc('m','p','4','v')  https://docs.opencv.org/3.1.0/dd/d43/tutorial_py_video_display.html
 #output_vid  = cv2.VideoWriter('test_out.mp4', 0x7634706d, 24, (1920,1080), True)
-
 
 ### - SERIELL KOMMUNIKASJON
 arduino = serial.Serial(port = '/dev/tty.usbmodem14101', baudrate = 9600, timeout=1) # - Åpne serialport for komm. med Arduino
 time.sleep(2)
 arduino.flush()
 print ('[info]: Oppretter seriell kommunikasjon med Arduino')
-
 
 # For lagring av bilder
 if not os.path.exists('detection_pics'):
@@ -62,7 +58,6 @@ with detection_graph.as_default():
     serialized_graph = fid.read()
     od_graph_def.ParseFromString(serialized_graph)
     TF.import_graph_def(od_graph_def, name = '')
-    
 print('[info]: Laster inn Tensorflow-modell')
      
 # - Load label map
@@ -81,7 +76,6 @@ with detection_graph.as_default():
 
         sttime = datetime.now().strftime('%d.%m.%Y - %H:%M:%S - ')
         #cv2.resize(frame, (im_w,im_h))
-  
         #output_vid.open('test_out.mp4', fourcc,20, (1280,720), True)
 
         image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
@@ -95,7 +89,6 @@ with detection_graph.as_default():
         # - Each score represent how level of confidence for each of the objects.
         # - Score is shown on the result image, together with the class label.
         detection_scores = detection_graph.get_tensor_by_name('detection_scores:0')
-
         detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
         num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 
@@ -146,12 +139,9 @@ with detection_graph.as_default():
               ##
               with open(os.path.join('/Users/victor/Desktop/pdp_local/logging',log),'w') as logfile:
                 logfile.write(sttime + txt_detect + '\n')
-
               cv2.imwrite('detection_pics/'+sttime+'frame%d.jpg' % count, frame) # lagrer bilder som inneholder detektering
-
               cv2.imwrite("frame.jpg", frame)     # nyeste bilde for html     
               count += 1
-        
         fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)        
         cv2.flip(frame,0)
         cv2.putText(frame, "FPS: " +str(int(fps)), (100,50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50,170,50), 2)
