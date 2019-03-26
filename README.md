@@ -12,7 +12,7 @@ git clone https://github.com/tensorflow/models.git
 sudo apt install python3-pip
 ```
 
-Legger *display_detections.py*, *pdp_17k_inference_graph (folder)**, *training (folder)* inn i /models/research/object_detection
+Flytt *display_detections.py*, *pdp_17k_inference_graph (folder)*, og *training (folder)* inn i /models/research/object_detection
 
 
 ### 2) Svært viktig steg
