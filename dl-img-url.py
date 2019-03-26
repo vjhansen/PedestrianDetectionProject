@@ -1,11 +1,11 @@
-# kan brukes for å laste ned bilder + gjøre bilde svart/hvit + renaming
+# brukes for å laste ned bilder + gjøre bilde svart/hvit + renaming
 
 import os, cv2
 import urllib.request as urlreq
 import numpy as np
 
 img_urls = urlreq.urlopen('http://www.url..').read().decode()
-img_num = 1
+img_num = 1 # vil gi bildene navn som: 1,2,3.jpg
     
 if not os.path.exists('datasett'):
     os.makedirs('datasett')
