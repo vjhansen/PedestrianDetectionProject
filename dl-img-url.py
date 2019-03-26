@@ -1,10 +1,8 @@
-# brukes for å laste ned bilder + gjøre bilde svart/hvit + renaming
-
 import os, cv2
 import urllib.request as urlreq
 import numpy as np
 
-img_urls = urlreq.urlopen('http://www.url..').read().decode()
+img_urls = urlreq.urlopen('http://www.image-net.org/api/text/imagenet.synset.geturls?wnid=n09629752').read().decode()
 img_num = 1 # vil gi bildene navn som: 1,2,3.jpg
     
 if not os.path.exists('datasett'):
@@ -14,7 +12,7 @@ for i in img_urls.split('\n'):
     try:
         print(i)
         urlreq.urlretrieve(i, "datasett/"+str(img_num)+".jpg")
-        img = cv2.imread("datasett/"+str(img_num)+".jpg",cv2.IMREAD_GRAYSCALE) # gjør bildene svart/hvit
+        img = cv2.imread("datasett/"+str(img_num)+".jpg") # bruk IMREAD_GRAYSCALE for å gjøre bildene svart/hvit
         cv2.imwrite("datasett/"+str(img_num)+".jpg",img)
         print(img_num)
         img_num += 1
