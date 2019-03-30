@@ -8,8 +8,10 @@ int val;
 
 void setup() {
   Serial.begin(9600);
-  servo_pan.attach(6);
-  servo_tilt.attach(5);
+  servo_pan.attach(5);
+  servo_pan.write(pos_pan);
+  servo_tilt.attach(6);
+  servo_tilt.write(pos_tilt);
 }
 
 void loop() {
@@ -17,12 +19,12 @@ void loop() {
     val = Serial.read();
     
     if (val == 'd') {   // høyre
-      pos_pan += 1;
+      pos_pan -= 2;
       servo_pan.write(pos_pan);
       delay(15);
-     }
+    }
     if (val == 'a') {   // venstre
-      pos_pan -= 1;
+      pos_pan += 2;
       servo_pan.write(pos_pan); 
       delay(15);
     }
