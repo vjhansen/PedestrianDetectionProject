@@ -8,11 +8,9 @@
 #define   SERVO_PAN_MAX        180
 #define   SERVO_MIN            0
 
-
-
 #define   baudrate        9600
 
-//definererv ariabler
+//definerer variabler
 Servo SERVO_PAN;
 Servo SERVO_TILT;
 int tid = 0;
@@ -20,9 +18,7 @@ int y = 0;
 int i, x, j;
 
 
-
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(baudrate);
   SERVO_PAN.attach(SERVO_PAN_PIN);
   SERVO_TILT.attach(SERVO_TILT_PIN);
@@ -31,8 +27,6 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
      x = 1;
      delay(5000);
 
