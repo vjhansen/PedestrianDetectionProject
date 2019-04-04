@@ -1,6 +1,5 @@
 # PDP - Bachelor 19, AUT, UiT
 # Fotgjengerdetektering med SSDLite + MobileNetV2
-# Oppdatert: 26.03 - Victor
 
 # Kode bygger på:
 # https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
