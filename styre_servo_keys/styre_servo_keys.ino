@@ -1,3 +1,5 @@
+// Styre servo med tastatur.
+
 #include<Servo.h>
 
 Servo servo_pan;
