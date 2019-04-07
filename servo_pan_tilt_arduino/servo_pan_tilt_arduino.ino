@@ -1,5 +1,7 @@
+// Følge person. Fungerer ikke optimalt.
 #include <Servo.h>
 
+//- bygger på:
 //- https://github.com/embecosm/esp9-arduino-facetracker/blob/master/cam_servo.ino
 
 #define  SERVO_PAN_MAX          180     //- max panning
