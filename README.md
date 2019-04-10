@@ -2,7 +2,7 @@
 Victor J. Hansen & Kato S. Karlsen.
 
 
-[Trening - FloydHub](../blob/master/floydhub_training.md)
+[Trening - FloydHub](../master/floydhub_training.md)
 
 
 ### 1)
