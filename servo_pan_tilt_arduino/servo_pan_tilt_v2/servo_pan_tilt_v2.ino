@@ -1,3 +1,4 @@
+// - PDP
 // Skanneprogram
 #include <Servo.h>
 
@@ -10,13 +11,12 @@
 #define   SERVO_MIN            0
 #define   baudrate             9600
 
-//definerer variabler
+// - definerer variabler
 Servo SERVO_PAN;
 Servo SERVO_TILT;
 int tid = 0;
 int y = 0;
 int i, x, j;
-
 
 void setup() {
   Serial.begin(baudrate);
@@ -30,7 +30,7 @@ void loop() {
      x = 1;
      delay(5000);
 
-     //kjør dette to ganger, bruk funksjoner til å gi instrukser til servoer
+     // - kjør dette to ganger, bruk funksjoner til å gi instrukser til servoer
      if(y <=  1) {
       opp(5, 100);
       venstre(150, 100);
@@ -41,7 +41,8 @@ void loop() {
 }
 
 
-/* -  funksjon for å øke posisjon til servo, skal samsvare med å
+/*
+      funksjon for å øke posisjon til servo, skal samsvare med å
       vri til venstre. Tar inn to variabler, første for hvor langt
       vi skal vri, den andre for hvor fort (større verdi gir saktere
       hastighet pga delay blir større
