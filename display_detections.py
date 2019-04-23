@@ -27,8 +27,6 @@ print ('[info]: Kamera tilkoblet')
 #cap = cv2.VideoCapture('a1.mp4') # - teste video
 
 # For lagring av video
-# https://docs.opencv.org/3.1.0/dd/d43/tutorial_py_video_display.html se denne for codecs
-#fourcc = cv2.VideoWriter_fourcc('m','p','4','v')  https://docs.opencv.org/3.1.0/dd/d43/tutorial_py_video_display.html
 #output_vid  = cv2.VideoWriter('test_out.mp4', 0x7634706d, 24, (1920,1080), True)
 
 ### - SERIELL KOMMUNIKASJON
@@ -98,7 +96,7 @@ with detection_graph.as_default():
           [detection_boxes, detection_scores, detection_classes, num_detections], 
           feed_dict = {image_tensor: frame_expanded})
 
-        score_thresh = 0.6  # - nedre grense for prediction-score
+        score_thresh = 0.5  # - nedre grense for prediction-score
         max_bbx = 1        # - maks. antall bounding boxes som skal tegnes
 
         # - Visualisering av detekteringen
@@ -132,9 +130,7 @@ with detection_graph.as_default():
               xCenter = int((xmax + xmin)*W / 2.0)
               yCenter = int((ymax + ymin)*H / 2.0)
               cv2.circle(frame, (xCenter,yCenter), 5, (0,0,255), -1)
-              #cv2.rectangle(frame, (bbx_xmin, bbx_ymin), (bbx_xmax, bbx_ymax), (0,255,0), 4)
               output_coords = 'X{0:d}Y{1:d}'.format(xCenter, yCenter)
-              
               txt_detect = 'Detected pedestrian'
               print(output_coords)
               log = 'log.txt'
