@@ -4,9 +4,9 @@ import os, sys, cv2, numpy
 
 img_num = 1
 dir_src = "Datasett/"
-dir_dst = "aug_datasett/"
 src_files = os.listdir(dir_src)
 
+dir_dst = "agmntd_datasett/"
 if not os.path.exists(dir_dst):
 	os.makedirs(dir_dst)
 
