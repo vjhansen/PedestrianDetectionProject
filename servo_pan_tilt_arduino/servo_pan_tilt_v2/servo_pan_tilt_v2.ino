@@ -41,10 +41,12 @@ void loop() {
 }
 
 
-//funksjon for å øke posisjon til servo, skal samsvare med å
-//vri til venstre. Tar inn to variabler, første for hvor langt
-//vi skal vri, den andre for hvor fort (større verdi gir saktere
-//hastighet pga delay blir større)
+/* -  funksjon for å øke posisjon til servo, skal samsvare med å
+      vri til venstre. Tar inn to variabler, første for hvor langt
+      vi skal vri, den andre for hvor fort (større verdi gir saktere
+      hastighet pga delay blir større
+*/
+
 //Lager tre til bare med høyre, opp og ned, samme type input.
 
 int venstre(int a, int b) {
