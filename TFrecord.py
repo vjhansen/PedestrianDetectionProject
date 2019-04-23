@@ -1,6 +1,8 @@
+# PDP
+# Konvertere fra .csv-fil til .record-fil
+
 # Kilde: https://github.com/datitran/raccoon_dataset/blob/master/generate_tfrecord.py
 # hentet 08.01.19
-
 
 """
 Usage:
