@@ -11,7 +11,6 @@ import os
 import cv2    # - OpenCV
 import tensorflow as TF
 import serial   # - kommunikasjon med Arduino
-import struct   # trengs ikke?
 
 from datetime import datetime
 from collections import defaultdict
@@ -42,7 +41,7 @@ count = 0
 
 ### - MODELL
 # - laster inn ferdigtrent modell
-modell = 'pdp_17k_inference_graph'
+modell = 'pdp_v2'
 
 # - Frozen detection graph. Dette er modellen som brukes for detekteringen.
 PATH_TO_CKPT = modell + '/frozen_inference_graph.pb'
@@ -76,7 +75,6 @@ with detection_graph.as_default():
 
         sttime = datetime.now().strftime('%d.%m.%Y - %H:%M:%S - ')
         #cv2.resize(frame, (im_w,im_h))
-        #output_vid.open('test_out.mp4', fourcc,20, (1280,720), True)
 
         image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
         
