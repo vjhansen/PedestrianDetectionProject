@@ -1,4 +1,6 @@
-// Styre servo med tastatur.
+
+// PDP
+// Styre servo-rigg med tastatur
 
 #include<Servo.h>
 
@@ -20,22 +22,22 @@ void loop() {
   if (Serial.available()) {
     val = Serial.read();
     
-    if (val == 'd') {   // høyre
+    if (val == 'd') {   // D = høyre
       pos_pan -= 2;
       servo_pan.write(pos_pan);
       delay(15);
     }
-    if (val == 'a') {   // venstre
+    if (val == 'a') {   // A = venstre
       pos_pan += 2;
       servo_pan.write(pos_pan); 
       delay(15);
     }
-    if (val == 'w') {   // opp
+    if (val == 'w') {   // W = opp
       pos_tilt += 1;
       servo_tilt.write(pos_tilt);
       delay(15);
     }
-    if (val == 's') {   // ned
+    if (val == 's') {   // S = ned
       pos_tilt -= 1;
       servo_tilt.write(pos_tilt);
       delay(15);
