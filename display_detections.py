@@ -94,7 +94,7 @@ with detection_graph.as_default():
               numpy.squeeze(classes).astype(numpy.int32), 
               numpy.squeeze(scores),
               category_index,
-              use_normalized_coordinates=True
+              use_normalized_coordinates = True,
               max_boxes_to_draw = max_bbx, 
               min_score_thresh = score_thresh, 
               line_thickness = 5)
@@ -118,7 +118,7 @@ with detection_graph.as_default():
               yCenter = int((ymax + ymin)*H / 2.0)
               cv2.circle(frame, (xCenter,yCenter), 5, (0,0,255), -1)
               output_coords = 'X{0:d}Y{1:d}'.format(xCenter, yCenter)
-              cv2.imwrite('detection_pics/'+sttime+'frame%d.jpg' % count, frame) # lagrer bilder som inneholder detektering
+              cv2.imwrite('detection_pics/' + sttime + 'frame%d.jpg' % count, frame) # lagrer bilder som inneholder detektering
               count += 1
               
         fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)        
