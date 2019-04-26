@@ -25,15 +25,6 @@ cap = cv2.VideoCapture(0) # - usbkamera/webcam: forsøk (-1), (0) eller (1)
 print ('[info]: Kamera tilkoblet')
 #cap = cv2.VideoCapture('a1.mp4') # - teste video
 
-# For lagring av video
-#output_vid  = cv2.VideoWriter('test_out.mp4', 0x7634706d, 24, (1920,1080), True)
-
-### - SERIELL KOMMUNIKASJON
-arduino = serial.Serial(port = '/dev/tty.usbmodem14101', baudrate = 9600, timeout=1) # - Åpne serialport for komm. med Arduino
-time.sleep(2)
-arduino.flush()
-print ('[info]: Oppretter seriell kommunikasjon med Arduino')
-
 # For lagring av bilder
 if not os.path.exists('detection_pics'):
   os.makedirs('detection_pics')
@@ -95,7 +86,7 @@ with detection_graph.as_default():
           feed_dict = {image_tensor: frame_expanded})
 
         score_thresh = 0.5  # - nedre grense for prediction-score
-        max_bbx = 1        # - maks. antall bounding boxes som skal tegnes
+        max_bbx = 1         # - maks. antall bounding boxes som skal tegnes
 
         # - Visualisering av detekteringen
         # - numpy.squeeze fjerner 1 dimensjonale oppføringer fra formen på input-array
@@ -129,26 +120,16 @@ with detection_graph.as_default():
               yCenter = int((ymax + ymin)*H / 2.0)
               cv2.circle(frame, (xCenter,yCenter), 5, (0,0,255), -1)
               output_coords = 'X{0:d}Y{1:d}'.format(xCenter, yCenter)
-              txt_detect = 'Detected pedestrian'
-              print(output_coords)
-              log = 'log.txt'
-              arduino.write(output_coords.encode()) # - skriver koord. til Arduino      
-              with open(os.path.join('/Users/victor/Desktop/pdp_local/logging',log),'w') as logfile:
-                logfile.write(sttime + txt_detect + '\n')
               cv2.imwrite('detection_pics/'+sttime+'frame%d.jpg' % count, frame) # lagrer bilder som inneholder detektering
-              cv2.imwrite("frame.jpg", frame)     # nyeste bilde for html     
               count += 1
               
         fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)        
         cv2.flip(frame,0)
-        cv2.putText(frame, "FPS: " +str(int(fps)), (100,50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50,170,50), 2)
-        cv2.imshow('SSDLite + MobileNetV2', cv2.resize(frame,(im_w, im_h)))
-        #output_vid.write(frame)
+        cv2.putText(frame, "FPS: " + str(int(fps)), (100, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50, 170, 50), 2)
+        cv2.imshow('SSDLite + MobileNetV2', cv2.resize(frame, (im_w, im_h)))
         
         if cv2.waitKey(10) & 0xFF == ord('q'):
           break
           
 cv2.destroyAllWindows()
 cap.release()
-#output_vid.release()
-arduino.close()
