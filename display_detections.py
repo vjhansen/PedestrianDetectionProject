@@ -1,4 +1,4 @@
-# PDP - Bachelor 19, AUT, UiT
+# PDP - Bachelor 19, Automasjon
 # Fotgjengerdetektering med SSDLite + MobileNetV2
 
 # Kode bygger på:
