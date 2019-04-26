@@ -59,20 +59,16 @@ with detection_graph.as_default():
       while True:
         ret, frame = cap.read()
         timer = cv2.getTickCount()
-        im_w = 480
-        im_h = 320
-
+        im_w = 1280
+        im_h = 720
         sttime = datetime.now().strftime('%d.%m.%Y - %H:%M:%S - ')
-        #cv2.resize(frame, (im_w,im_h))
-
-        image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
         
+        image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
         # - bruker expand_dims for å endre formen på frame fra (1080, 1920, 3) til (1, 1080, 1920, 3)
         frame_expanded = numpy.expand_dims(frame, axis = 0)
 
         # - hver box representerer en del av bildet der et objekt ble detektert.
         detection_boxes = detection_graph.get_tensor_by_name('detection_boxes:0')
-
         # - hver score representerer level of confidence for each of the objects.
         # - Score vises på output-bildet sammen med klasse-label.
         detection_scores = detection_graph.get_tensor_by_name('detection_scores:0')
@@ -84,7 +80,7 @@ with detection_graph.as_default():
           feed_dict = {image_tensor: frame_expanded})
 
         score_thresh = 0.5  # - nedre grense for prediction-score
-        max_bbx = 1         # - maks. antall bounding boxes som skal tegnes
+        max_bbx = 5         # - maks. antall bounding boxes som skal tegnes
 
         # - Visualisering av detekteringen
         # - numpy.squeeze fjerner 1 dimensjonale oppføringer fra formen på input-array
@@ -97,7 +93,7 @@ with detection_graph.as_default():
               use_normalized_coordinates = True,
               max_boxes_to_draw = max_bbx, 
               min_score_thresh = score_thresh, 
-              line_thickness = 5)
+              line_thickness = 4)
 
         # - Normaliserte bbx-koordinater (i forhold til størrelsen på input-frame)
         # - koord. er på formen [y_min, x_min, y_max, x_max]
@@ -116,18 +112,16 @@ with detection_graph.as_default():
               (bbx_ymin, bbx_xmin, bbx_ymax, bbx_xmax) = (int(ymin*H), int(xmin*W), int(ymax*H), int(xmax*W))
               xCenter = int((xmax + xmin)*W / 2.0)
               yCenter = int((ymax + ymin)*H / 2.0)
-              cv2.circle(frame, (xCenter,yCenter), 5, (0,0,255), -1)
+              cv2.circle(frame, (xCenter, yCenter), 3, (0,0,255), -1)
+              # koordinater for sentrum av fotgjenger
               output_coords = 'X{0:d}Y{1:d}'.format(xCenter, yCenter)
               cv2.imwrite('detection_pics/' + sttime + 'frame%d.jpg' % count, frame) # lagrer bilder som inneholder detektering
-              count += 1
-              
+              count += 1   
         fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)        
         cv2.flip(frame, 0)
         cv2.putText(frame, "FPS: " + str(int(fps)), (100, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50, 170, 50), 2)
         cv2.imshow('SSDLite + MobileNetV2', cv2.resize(frame, (im_w, im_h)))
-        
         if cv2.waitKey(10) & 0xFF == ord('q'):
           break
-          
 cv2.destroyAllWindows()
 cap.release()
