@@ -10,7 +10,6 @@ import time
 import os
 import cv2    # - OpenCV
 import tensorflow as TF
-import serial   # - kommunikasjon med Arduino
 
 from datetime import datetime
 from collections import defaultdict
@@ -20,10 +19,9 @@ sys.path.append("..")
 from utils import label_map_util
 from utils import visualization_utils as vis_util
 
-### - Video/Webcam
+### - Webcam
 cap = cv2.VideoCapture(0) # - usbkamera/webcam: forsøk (-1), (0) eller (1)
 print ('[info]: Kamera tilkoblet')
-#cap = cv2.VideoCapture('a1.mp4') # - teste video
 
 # For lagring av bilder
 if not os.path.exists('detection_pics'):
@@ -48,7 +46,7 @@ with detection_graph.as_default():
     serialized_graph = fid.read()
     od_graph_def.ParseFromString(serialized_graph)
     TF.import_graph_def(od_graph_def, name = '')
-print('[info]: Laster inn Tensorflow-modell')
+print('[info]: Laster inn TensorFlow-modell')
      
 # - Load label map
 # Når modellen predikerer verdien "1" så vet vi at dette er en "person". 
@@ -124,7 +122,7 @@ with detection_graph.as_default():
               count += 1
               
         fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)        
-        cv2.flip(frame,0)
+        cv2.flip(frame, 0)
         cv2.putText(frame, "FPS: " + str(int(fps)), (100, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50, 170, 50), 2)
         cv2.imshow('SSDLite + MobileNetV2', cv2.resize(frame, (im_w, im_h)))
         
