@@ -1,4 +1,3 @@
-# PedestrianDetectionProject - bachelor 19, automasjon, UiT
 Oppsett: Steg 1 - 3 (~15 minutter)
 
 Trening og Evaluering: Steg 4 - 5 (~4.5 timer)
