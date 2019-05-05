@@ -3,7 +3,6 @@
 
 numpy
 tensorflow
-pyserial
 opencv-python
 matplotlib
 
