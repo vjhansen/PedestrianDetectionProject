@@ -1,5 +1,8 @@
 // - PDP
 // Skanneprogram
+
+// test om den fungerer!
+
 #include <Servo.h>
 
 #define   SERVO_PAN_PIN        5
