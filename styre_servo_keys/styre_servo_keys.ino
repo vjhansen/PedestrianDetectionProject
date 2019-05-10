@@ -1,7 +1,6 @@
-// PDP
-// Styre servo-rigg med tastatur
-
-// test om den fungerer!
+/* 
+  PDP - Styre kamerarigg med tastatur
+*/
 
 #include <Servo.h>
 
