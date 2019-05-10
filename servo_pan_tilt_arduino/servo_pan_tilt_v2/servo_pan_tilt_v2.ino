@@ -1,7 +1,6 @@
-// - PDP
-// Skanneprogram
-
-// test om den fungerer!
+/*
+  PDP - Skanneprogram for Arduino Uno
+*/
 
 #include <Servo.h>
 
@@ -14,7 +13,7 @@
 #define   SERVO_MIN            0
 #define   baudrate             9600
 
-// - definerer variabler
+// - Definerer variabler
 Servo SERVO_PAN;
 Servo SERVO_TILT;
 int time = 0;
@@ -27,7 +26,7 @@ void setup() {
   SERVO_PAN.attach(SERVO_PAN_PIN);
   SERVO_TILT.attach(SERVO_TILT_PIN);
   
-  SERVO_PAN.write(0); //hvorfor 0?
+  SERVO_PAN.write(0); // kan disse ha verdien 0?
   SERVO_TILT.write(0);
 }
 
@@ -36,7 +35,7 @@ void loop() {
   num_rounds = 1;
   delay(5000);
   
-  // - kjør dette to ganger, bruk funksjoner til å gi instrukser til servoer
+  // - Kjører dette to ganger. Bruk funksjoner til å gi instrukser til servoer
   if(current_round <=  num_rounds) {
     up(5, 100);
     left(150, 100);
@@ -73,7 +72,7 @@ int right(int dist_right, int delay_right) {
 
 int up(int dist_up, int delay_up) {
   if(dist_up <= SERVO_TILT_MAX) {
-    for(int pos_up = SERVO_TILT.read(); pos_up <= dist_up; pos_up = pos_up + inc){
+    for(int pos_up = SERVO_TILT.read(); pos_up <= dist_up; pos_up = pos_up + inc) {
       SERVO_TILT.write(pos_up);
       delay(delay_up);
     }
@@ -82,7 +81,7 @@ int up(int dist_up, int delay_up) {
 
 int down(int dist_down, int delay_down) {
   if(dist_down >= SERVO_MIN) {
-    for(int pos_down = SERVO_TILT.read(); pos_down >= dist_down; pos_down = pos_down - inc){
+    for(int pos_down = SERVO_TILT.read(); pos_down >= dist_down; pos_down = pos_down - inc) {
        SERVO_TILT.write(pos_down);
        delay(delay_down);
     }
