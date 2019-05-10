@@ -12,7 +12,7 @@ Servo servo_pan;
 Servo servo_tilt;
 
 int pos_pan = 0;
-int pos_tilt = 50;
+int pos_tilt = 5;
 int val;
 int wait_time = 15;
 int pan_inc = 2;
