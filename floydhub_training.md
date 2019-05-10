@@ -46,7 +46,7 @@ Ran 15 tests in 0.xxxs
 OK
 ```
 
-### 2) Laste ned modellen SSDLite MobileNet V2 fra Tensorflow detection model zoo.
+### 2) Laste ned modellen SSDLite+MobileNetV2 fra Tensorflow detection model zoo.
 
 ```
  cd /floyd/home/kode
@@ -128,4 +128,3 @@ python3 export_inference_graph.py \
 # velg model.ckpt-'største nr', f.eks. model.ckpt-13983 (ikke ta med .meta)
 ```
 Last ned mappen: --> home --> kode --> pdp_alpha_inference_graph
-
