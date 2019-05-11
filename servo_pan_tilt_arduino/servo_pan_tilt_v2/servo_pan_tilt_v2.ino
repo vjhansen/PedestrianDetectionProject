@@ -6,18 +6,17 @@
 
 #define   SERVO_PAN_PIN        5
 #define   SERVO_TILT_PIN       6
-#define   SERVO_PAN_INIT_POS   90
+#define   SERVO_PAN_INIT_POS   0
 #define   SERVO_TILT_INIT_POS  5
 #define   SERVO_TILT_MAX       20
-#define   SERVO_PAN_MAX        180
+#define   SERVO_PAN_MAX        175
 #define   SERVO_MIN            0
 #define   baudrate             9600
 
-// - Definerer variabler
 Servo SERVO_PAN;
 Servo SERVO_TILT;
 int time = 0;
-int current_round = 0; // antall runder
+int current_round = 0;
 int inc = 0;
 int num_rounds = 0;
 
@@ -25,9 +24,8 @@ void setup() {
   Serial.begin(baudrate);
   SERVO_PAN.attach(SERVO_PAN_PIN);
   SERVO_TILT.attach(SERVO_TILT_PIN);
-  
-  SERVO_PAN.write(0); // kan disse ha verdien 0?
-  SERVO_TILT.write(0);
+  SERVO_PAN.write(SERVO_PAN_INIT_POS);
+  SERVO_TILT.write(SERVO_TILT_INIT_POS);
 }
 
 void loop() {
