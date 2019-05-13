@@ -30,7 +30,6 @@ void setup() {
 }
 
 void loop() {
-  Serial.begin(9600);
   pan_inc = 2;      // - inkrementering for panorering
   tilt_inc = 0.1;   // - inkrementering for tilting
   num_rounds = 3;
