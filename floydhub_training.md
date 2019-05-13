@@ -52,16 +52,15 @@ OK
  cd /floyd/home/PDP_folder && \
  wget http://download.tensorflow.org/models/object_detection/ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz && \
  tar xf ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz
-
-# git clone https://github.com/vjhansen/pdp-bachelor.git (senere, privat nå)
 ```
 
-### 3) legge til filer
-(dette må gjøres manuelt..)
+### 3) Legge til filer
 ```
-cd /floyd/home/PDP_folder/ && \
-mkdir training
+git clone https://github.com/vjhansen/pdp-bachelor.git 
+
+cd /floyd/home/PDP_folder/
 ```
+Flytt alt fra pdp-bachelor til /floyd/home/PDP_folder/.
 Struktur
 ```
 PDP_folder
