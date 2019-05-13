@@ -5,23 +5,21 @@
 Testet med Ubuntu 18.04 LTS og 18.10
 
 ```
-cd Skrivebord eller Desktop
-sudo apt install git
-git clone https://github.com/tensorflow/models.git
+cd Desktop
+
+sudo apt install git && \
+git clone https://github.com/tensorflow/models.git && \
 sudo apt install python3-pip
 ```
 
-Flytt *display_detections.py*, *pdp_17k_inference_graph (folder)*, og *training (folder)* inn i /models/research/object_detection
+Flytt *display_detections.py*, *pdp_v2 (folder)*, og *training (folder)* til */models/research/object_detection*
 
 
 ### 2) Svært viktig steg
 ```
-sudo apt install protobuf-compiler
-
-cd /models/research/
-
-protoc object_detection/protos/*.proto --python_out=.
-
+sudo apt install protobuf-compiler && \
+cd /models/research/ && \
+protoc object_detection/protos/*.proto --python_out=. && \
 export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 
 ```
