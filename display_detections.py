@@ -117,7 +117,7 @@ with detection_graph.as_default():
               # - Koordinater for sentrum av fotgjenger
               output_coords = 'X{0:d}Y{1:d}'.format(xCenter, yCenter)
               # - Lagrer bilder som inneholder et detektert objekt.
-              cv2.imwrite('detection_pics/' + sttime + 'frame%d.jpg' % count, frame) #
+              cv2.imwrite('detection_pics/' + sttime + 'frame%d.jpg' % count, frame)
               count += 1   
         fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)        
         cv2.flip(frame, 0)
