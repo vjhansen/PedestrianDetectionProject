@@ -1,6 +1,4 @@
-/*
-  PDP - Områdeskanning for Arduino Uno
-*/
+/* PDP - Områdeskanning for Arduino Uno */
 
 #include <Servo.h>
 
