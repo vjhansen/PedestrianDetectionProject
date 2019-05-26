@@ -124,10 +124,9 @@ with detection_graph.as_default():
               count += 1   
         fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)        
         cv2.flip(frame, 0)
-        # - Viser bildefrekvens på videostrømmen.
         score_view = numpy.squeeze(scores)[0]*100
         cv2.putText(frame, "FPS: " + str(int(fps)), (100, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50, 170, 50), 2)
-        cv2.putText(frame, "score: " + str(score_view), (500,50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50, 170, 50), 2)
+        cv2.putText(frame, "Score: " + str(int(score_view)) + '%', (500,50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50, 170, 50), 2)
         # - Videostrømming
         cv2.imshow('SSDLite + MobileNetV2', cv2.resize(frame, (im_w, im_h)))
         if cv2.waitKey(10) & 0xFF == ord('q'):
