@@ -116,7 +116,7 @@ with detection_graph.as_default():
               # - Sirkel
               cv2.circle(frame, (xCenter, yCenter), 3, (0,0,255), -1)
               # - Tegner rektangel rundt fotgjenger (alternativ til visualize_boxes_and_labels_on_image_array)
-              cv2.rectangle(frame, (bbx_xmin, bbx_ymin), (bbx_xmax, bbx_ymax), (0,255,0), 4)
+              #cv2.rectangle(frame, (bbx_xmin, bbx_ymin), (bbx_xmax, bbx_ymax), (0,255,0), 4)
               # - Koordinater for sentrum av fotgjenger
               output_coords = 'X{0:d}Y{1:d}'.format(xCenter, yCenter)
               # - Lagrer bilder som inneholder et detektert objekt.
@@ -127,7 +127,7 @@ with detection_graph.as_default():
         # - Viser bildefrekvens på videostrømmen.
         score_view = numpy.squeeze(scores)[0]*100
         cv2.putText(frame, "FPS: " + str(int(fps)), (100, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50, 170, 50), 2)
-        cv2.putText(frame, "score: " +str(score_view), (100,50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50, 170, 50), 2)
+        cv2.putText(frame, "score: " + str(score_view), (500,50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (50, 170, 50), 2)
         # - Videostrømming
         cv2.imshow('SSDLite + MobileNetV2', cv2.resize(frame, (im_w, im_h)))
         if cv2.waitKey(10) & 0xFF == ord('q'):
