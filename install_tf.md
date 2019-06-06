@@ -29,6 +29,7 @@ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 ```
 cd /models/research/object_detection
 git clone https://github.com/vjhansen/pdp-bachelor.git
+cd /pdp-bachelor
 pip3 install -r requirements.txt
 ```
 
