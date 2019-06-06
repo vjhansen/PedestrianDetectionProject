@@ -65,8 +65,8 @@ Struktur
 ```
 PDP_folder
 |--> data
-|   |--> eval.record (ligger på onedrive)
-|   |--> train.record (ligger på onedrive)
+|   |--> eval.record (fil er for stor for github)
+|   |--> train.record (fil er for stor for github)
 |   
 |--> training
 |   |--> ssdlite_mobilenet_v2_coco.config
