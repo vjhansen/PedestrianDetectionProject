@@ -6,11 +6,11 @@
 
 """
 Usage:
-  # From tensorflow/models/
+# From tensorflow/models/
 # Create train data:
 python3 TFrecord.py --csv_input=data/train_labels.csv --output_path=data/train.record --image_dir=datasett/  
 
-  # Create test data:
+# Create test data:
 python3 TFrecord.py --csv_input=data/test_labels.csv --output_path=data/test.record --image_dir=datasett/
 
 """
