@@ -26,9 +26,9 @@ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 
 ### 3) Installere dependencies
 ```
-cd /models/research/object_detection
-git clone https://github.com/vjhansen/pdp-bachelor.git
-cd /pdp-bachelor
+cd /models/research/object_detection && \
+git clone https://github.com/vjhansen/pdp-bachelor.git && \
+cd /pdp-bachelor && \
 pip3 install -r requirements.txt
 ```
 
