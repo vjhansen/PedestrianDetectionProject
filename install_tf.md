@@ -1,7 +1,7 @@
 ## Installere TensorFlow
 
 
-### 1)
+### 1) Laste ned TensorFLow
 Testet med Ubuntu 18.04 LTS og 18.10
 
 ```
@@ -12,10 +12,9 @@ git clone https://github.com/tensorflow/models.git && \
 sudo apt install python3-pip
 ```
 
-Flytt *display_detections.py*, *pdp_v2 (folder)*, og *training (folder)* til */models/research/object_detection*
 
 
-### 2) Svært viktig steg
+### 2) Protobuf
 ```
 sudo apt install protobuf-compiler && \
 cd /models/research/ && \
@@ -25,7 +24,7 @@ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 ```
 
 
-### 3) Installere
+### 3) Installere dependencies
 ```
 cd /models/research/object_detection
 git clone https://github.com/vjhansen/pdp-bachelor.git
