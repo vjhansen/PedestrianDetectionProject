@@ -1,7 +1,7 @@
 ## Installere TensorFlow
 
 
-### 1) Laste ned TensorFLow
+### 1) Laste ned TensorFlow
 Testet med Ubuntu 18.04 LTS og 18.10
 
 ```
