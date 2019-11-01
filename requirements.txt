@@ -1,4 +1,4 @@
-# Dependencies for Python. Installer med:
+# Dependencies for Python. Install with:
 # `pip3 install -r requirements.txt`
 
 numpy
