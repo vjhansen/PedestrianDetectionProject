@@ -1,12 +1,12 @@
-# PedestrianDetectionProject - bachelor 19, automasjon, UiT
-Victor J. Hansen & Kato S. Karlsen.
+# PedestrianDetectionProject - bachelor thesis 2019, Automation, University of Tromsø
+### Victor J. Hansen & Kato S. Karlsen.
 
 
 
 ![alt text](https://raw.githubusercontent.com/vjhansen/pdp-bachelor/master/ogif.gif)
 
 
-[Trening - FloydHub](../master/floydhub_training.md)
+## [Training - FloydHub](../master/floydhub_training.md)
 
-[Installere TensorFlow (Debian)](../master/install_tf.md)
+## [Install TensorFlow (Debian)](../master/install_tf.md)
 
