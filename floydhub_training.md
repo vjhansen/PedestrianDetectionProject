@@ -1,15 +1,19 @@
-- Oppsett (~15 minutter).
-- Trening og Evaluering (~4.5 timer for 14k steg trening).
+> - Setup  (~15 minutes).
+> - Training and evaluation (~4.5h for 14k steps of training).
 
-### 1) Oppsett - FloydHub 
-- Åpne en Workspace
-- Velg Environment: TensorFlow 1.12, Machine: GPU
-- Åpne Terminal fra Launcher/Other
+### 1) Setup - FloydHub
 
-```sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-upgrade```
+- Open a Workspace
+- Pick Environment: TensorFlow 1.12, Machine: GPU
+- Open Terminal from Launcher/Other
 
-Installere Protobuf.
+```bash
+sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-upgrade
 ```
+
+Install Protobuf.
+
+```bash
  cd /tmp/ && \
  curl -OL https://github.com/google/protobuf/releases/download/v3.5.1/protoc-3.5.1-linux-x86_64.zip && \
  unzip protoc-3.5.1-linux-x86_64.zip -d protoc3 && \
@@ -18,8 +22,10 @@ Installere Protobuf.
  chown `whoami` /usr/local/bin/protoc && \
  chown -R `whoami` /usr/local/include/google
 ```
-Klone modell fra TensorFlow.
-```
+
+Clone modell from TensorFlow.
+
+```bash
 cd /floyd/home && \
 git clone https://github.com/tensorflow/models.git
 
@@ -29,24 +35,27 @@ git reset --hard ea6d6aa && \
 /usr/local/bin/protoc object_detection/protos/*.proto --python_out=. && \
 cp -R object_detection /floyd/home/PDP_folder && cp -R slim /floyd/home/PDP_folder
 ```
-^kjør denne på nytt hvis: 
-can't open file 'object_detection/builders/model_builder_test.py': [Errno 2] No such file or directory
 
-*Bruker en tidligere commit (git reset --hard ea6d6aa) av TensorFlow/Models/research*
-```
+> ^ run again if : 
+> can't open file 'object_detection/builders/model_builder_test.py': [Errno 2] No such file or directory
+
+* Using an earlier commit (git reset --hard ea6d6aa) of TensorFlow/Models/research*
+
+```bash
 rm -rf /floyd/home/PDP_folder/models && \
 export PYTHONPATH=$PYTHONPATH:/floyd/home/PDP_folder/object_detection/:/floyd/home/PDP_folder/slim && \
 cd /floyd/home/PDP_folder && python object_detection/builders/model_builder_test.py
+```
 
-```
-Output skal være: 
-```
+Output: 
+
+```bash
 Ran 15 tests in 0.xxxs
 
 OK
 ```
 
-### 2) Laste ned modellen SSDLite+MobileNetV2 fra Tensorflow detection model zoo.
+### 2) Download SSDLite+MobileNetV2 from Tensorflow detection model zoo.
 
 ```
  cd /floyd/home/PDP_folder && \
@@ -54,28 +63,32 @@ OK
  tar xf ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz
 ```
 
-### 3) Legge til filer
+### 3) Add files
+
 ```
 git clone https://github.com/vjhansen/pdp-bachelor.git 
 
 cd /floyd/home/PDP_folder/
 ```
-Flytt alt fra pdp-bachelor til /floyd/home/PDP_folder/.
-Struktur
+
+Move everything from pdp-bachelor to `/floyd/home/PDP_folder/`.
+
+##### Folder structure
+
 ```
 PDP_folder
 |--> data
-|   |--> eval.record (fil er for stor for github)
-|   |--> train.record (fil er for stor for github)
+|   |--> eval.record (too big for github)
+|   |--> train.record (too big for github)
 |   
 |--> training
 |   |--> ssdlite_mobilenet_v2_coco.config
 |   |--> ob-det.pbtxt
-
 ```
 
-### 4) Trening
-```
+### 4) Training
+
+```bash
 cd /floyd/home/ && \
 pip install --upgrade pip && \
 pip -q install pycocotools && \
@@ -86,18 +99,19 @@ python train.py --logtostderr --train_dir=/floyd/home/tensorboard_data --pipelin
 ```
 
 **Tensorboard**
-Visualisering av trening/evaluering.
-Du kan evt. trykke på TensorBoard-knappen nederst på skjermen (ved cpu-% osv)
-```
+Visualization of training/evaluation.
+
+```bash
 cp -R training/ /floyd/home
 
 tensorboard --logdir='floyd/home/tensorboard_data'
 ```
 
-### 5) Testing/evaluering
-Kan kjøres samtidig som treningen i steg 4 starter. Vi venter til TotalLoss er rundt 2.0. 
-Bare åpne et nytt terminal-vindu inne på FloydHub.
-```
+### 5) Testing/evaluation
+
+Open a new Terminal-window in FloydHub.
+
+```bash
 cd /floyd/home/PDP_folder
 
 python eval.py \
@@ -106,16 +120,20 @@ python eval.py \
     --checkpoint_dir=/floyd/home/tensorboard_data  \
     --eval_dir=eval/
 ```
-Hvis du får trøbbel:
-```
+
+ If you encounter some trouble:
+
+```bash
 export PYTHONPATH=$PYTHONPATH:/floyd/home/PDP_folder/object_detection/:/floyd/home/PDP_folder/slim
 ```
-Avslutt trening og evaluering med: CTRL+C
 
+Finish training and evaluation with: ctrl+c or cmd+c
 
-### 6) eksportere inference graph
-Gjør dette når du er fornøyd med treningen. F.eks. når Losses/TotalLoss < 1.5, og PascalBoxes_Precision/mAP@0.5IOU > 0.85. (følg med på utviklingen inne på TensorBoard)
-```
+### 6) export inference graph
+
+Do this when you're pleased with the training.  E.g. when Losses/TotalLoss < 1.5, and PascalBoxes_Precision/mAP@0.5IOU > 0.85.
+
+```bash
 cd PDP_folder
 
 python3 export_inference_graph.py \
@@ -124,6 +142,9 @@ python3 export_inference_graph.py \
     --trained_checkpoint_prefix /floyd/home/tensorboard_data/model.ckpt-xxx \
     --output_directory PDP_model
 
-# velg model.ckpt-'største nr', f.eks. model.ckpt-13983 (ikke ta med .meta)
+# pick model.ckpt-'highest nr.', e.g. model.ckpt-13983 (don't add .meta)
 ```
-Last ned mappen: --> home --> PDP_folder --> PDP_model
+
+Download the folder: --> home --> PDP_folder --> PDP_model
+
+
