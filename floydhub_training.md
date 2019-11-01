@@ -57,7 +57,7 @@ OK
 
 ### 2) Download SSDLite+MobileNetV2 from Tensorflow detection model zoo.
 
-```
+```bash
  cd /floyd/home/PDP_folder && \
  wget http://download.tensorflow.org/models/object_detection/ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz && \
  tar xf ssdlite_mobilenet_v2_coco_2018_05_09.tar.gz
@@ -65,7 +65,7 @@ OK
 
 ### 3) Add files
 
-```
+```bash
 git clone https://github.com/vjhansen/pdp-bachelor.git 
 
 cd /floyd/home/PDP_folder/
@@ -75,7 +75,7 @@ Move everything from pdp-bachelor to `/floyd/home/PDP_folder/`.
 
 ##### Folder structure
 
-```
+```bash
 PDP_folder
 |--> data
 |   |--> eval.record (too big for github)
