@@ -1,5 +1,5 @@
 # PDP
-# Brukes for å laste ned store mengder bilder fra ImageNet via url.
+# Used for downloading huge amounts of images from ImageNet via url.
 
 import os, cv2
 import urllib.request as urlreq
