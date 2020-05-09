@@ -1,7 +1,6 @@
-# PedestrianDetectionProject - bachelor thesis 2019
-### Victor J. Hansen & Kato S. Karlsen.
-### Automation, University of Tromsø
-
+# Pedestrian Detection Project - bachelor thesis 2019
+#### *Victor J. Hansen & Kato S. Karlsen.*
+#### *Automation, University of Tromsø*
 
 
 ![alt text](https://raw.githubusercontent.com/vjhansen/pdp-bachelor/master/ogif.gif)
