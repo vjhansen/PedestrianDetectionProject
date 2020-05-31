@@ -1,4 +1,4 @@
-# speiler bilder, brukes for å øke størrelsen på datasett
+# mirror images, used for increasing the size of our data set
 
 import os, sys, cv2, numpy
 
