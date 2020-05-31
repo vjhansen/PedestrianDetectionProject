@@ -1,6 +1,8 @@
 ## Install TensorFlow and run program
 
-> tested with Ubuntu 18.04 LTS and 18.10.
+> Outdated
+
+> Tested with Ubuntu 18.04 LTS and 18.10.
 
 ### 1) Download TensorFlow
 
