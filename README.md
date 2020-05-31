@@ -5,10 +5,10 @@
 
 > Victor J. Hansen & Kato S. Karlsen - Bachelor thesis 2019 - *Automation Engineering, University of Tromsø*
 
-![alt text](https://raw.githubusercontent.com/vjhansen/pdp-bachelor/master/ogif.gif)
-
 
 ### - [Training the Neural Network - FloydHub](../master/floydhub_training.md)
 
 ### - [Installing TensorFlow + Running the Real-Time Pedestrian Detection (Debian/macOS)](../master/install_tf.md)
 
+
+<img src="/ogif.gif" alt="drawing" width="450"/>
