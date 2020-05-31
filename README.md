@@ -11,4 +11,4 @@
 ### - [Installing TensorFlow + Running the Real-Time Pedestrian Detection (Debian/macOS)](../master/install_tf.md)
 
 
-<img src="/ogif.gif" alt="drawing" width="450"/>
+<img src="/ogif.gif" alt="drawing" width="400"/>
