@@ -1,7 +1,6 @@
-# PDP - Bachelor 19, Automasjon
-# Fotgjengerdetektering med SSDLite + MobileNetV2
+# Pedestrian Detection using SSDLite + MobileNetV2
 
-# Kode bygger på:
+# Code is based on:
 # https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
 
 import numpy
@@ -15,28 +14,28 @@ from datetime import datetime
 from collections import defaultdict
 
 sys.path.append("..")
-# - Verktøy fra TensorFlow Object Detection API
+# - Tools from TensorFlow Object Detection API
 from utils import label_map_util
 from utils import visualization_utils as vis_util
 
 ### - VIDEO
-cap = cv2.VideoCapture(0) # - usbkamera/webcam: forsøk (-1), (0) eller (1)
+cap = cv2.VideoCapture(0) # - usb-cam/webcam: try (-1), (0) or (1)
 print ('[info]: Kamera tilkoblet')
 
-# - For lagring av bilder
+# - storing of images
 if not os.path.exists('detection_pics'):
   os.makedirs('detection_pics')
 count = 0
 
-### - MODELL
+### - MODEL
 modell = 'pdp_v2'
-# - Dette er modellen som brukes for detekteringen.
+# - model used for detection
 PATH_TO_CKPT = modell + '/frozen_inference_graph.pb'
 
-# - ob-det.pbtxt inneholder label for 'person'.
+# ob-det.pbtxt contains label for 'person'.
 label_path = os.path.join('training', 'ob-det.pbtxt')
 
-# - Laster inn modellen vår
+# - Load model
 detection_graph = TF.Graph()
 with detection_graph.as_default():
   od_graph_def = TF.GraphDef()
@@ -47,12 +46,12 @@ with detection_graph.as_default():
 print('[info]: Laster inn TensorFlow-modell')
      
 
-# Når modellen predikerer verdien '1' så vet vi at dette er en 'person'. 
+# When our model predicts the value '1', then we know that this is a 'person'. 
 label_map = label_map_util.load_labelmap(label_path)
 categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes = 1, use_display_name = True)
 category_index = label_map_util.create_category_index(categories)
 
-# - Starter detektering av fotgjengere
+# - Start pedestrian detection
 with detection_graph.as_default():
     with TF.Session(graph = detection_graph) as sess:
       while True:
@@ -63,27 +62,27 @@ with detection_graph.as_default():
         sttime = datetime.now().strftime('%d.%m.%Y - %H:%M:%S - ')
         
         image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
-        # - Bruker expand_dims for å endre formen på frame fra (1080, 1920, 3) til (1, 1080, 1920, 3)
+        # - using expand_dims to change frame shape from (1080, 1920, 3) to (1, 1080, 1920, 3)
         frame_expanded = numpy.expand_dims(frame, axis = 0)
 
-        # - Hver boks representerer en del av bildet der en fotgjenger ble detektert.
+        # - each box represents a piece of the image-frame where a pedestrian was detected.
         detection_boxes = detection_graph.get_tensor_by_name('detection_boxes:0')
-        # - Hver score representerer sannsynligheten for hvert detekterte objekt.
-        # - En score vises på output-bildet sammen med label for klasse 'person'.
+        # - each score represents the probability for each detected object.
+        # - a score is shown on the output image-frame with the label 'person'
         detection_scores = detection_graph.get_tensor_by_name('detection_scores:0')
         detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
         num_detections = detection_graph.get_tensor_by_name('num_detections:0')
         
-        # - her kjøres selve detekteringen
+        # - running the actual detection
         (boxes, scores, classes, num) = sess.run(
           [detection_boxes, detection_scores, detection_classes, num_detections], 
           feed_dict = {image_tensor: frame_expanded})
 
-        score_thresh = 0.5  # - nedre grense for prediction-score
-        max_bbx = 5         # - maks. antall bounding boxes som skal tegnes
+        score_thresh = 0.5  # - lower threshold of prediction score 
+        max_bbx = 5         # - max. number of bounding boxes to be drawn
 
-        # - Visualisering av detekteringen
-        # - numpy.squeeze fjerner 1 dimensjonale oppføringer fra formen på input-array
+        # - Visualization of the detection
+        # - numpy.squeeze removes the 1-D entries in the input array's shape
         vis_util.visualize_boxes_and_labels_on_image_array(
               frame, 
               numpy.squeeze(boxes),
@@ -95,30 +94,27 @@ with detection_graph.as_default():
               min_score_thresh = score_thresh, 
               line_thickness = 4)
 
-        # - Normaliserte bbx-koordinater (i forhold til størrelsen på input-frame)
-        # - Koordinater er på formen [y_min, x_min, y_max, x_max]
+        # - Normalize bbx-coordinates (relative to the input-frame's size)
+        # - coordinates: [y_min, x_min, y_max, x_max]
         ymin = (boxes[0][0][0]) 
         xmin = (boxes[0][0][1])
         ymax = (boxes[0][0][2])
         xmax = (boxes[0][0][3])
 
-        # - W (bredde) og H (høyde) endres med oppløsningen på film/kamera
-        W = (frame.shape[1]) # - horisontal
-        H = (frame.shape[0]) # - vertikal
+        # - W (width) and H (height) varies according to the resolution of the video-input.
+        W = (frame.shape[1]) # - horizontal
+        H = (frame.shape[0]) # - vertical
        
-        # - Tegner sirkel i sentrum av bounding box med høyeste score
+        # - Draw a small circle in the centre of the bounding box with the highest score
         for i in range(min(max_bbx, boxes.shape[0])):
           if numpy.squeeze(scores)[i] > score_thresh:
               (bbx_ymin, bbx_xmin, bbx_ymax, bbx_xmax) = (int(ymin*H), int(xmin*W), int(ymax*H), int(xmax*W))
               xCenter = int((xmax + xmin)*W / 2.0)
               yCenter = int((ymax + ymin)*H / 2.0)
-              # - Sirkel
               cv2.circle(frame, (xCenter, yCenter), 3, (0,0,255), -1)
-              # - Tegner rektangel rundt fotgjenger (alternativ til visualize_boxes_and_labels_on_image_array)
-              #cv2.rectangle(frame, (bbx_xmin, bbx_ymin), (bbx_xmax, bbx_ymax), (0,255,0), 2)
-              # - Koordinater for sentrum av fotgjenger
+              # - coordinates for centre of detected object
               output_coords = 'X{0:d}Y{1:d}'.format(xCenter, yCenter)
-              # - Lagrer bilder som inneholder et detektert objekt.
+              # - save images containing detected objects
               cv2.imwrite('detection_pics/' + sttime + 'frame%d.jpg' % count, frame)
               count += 1   
         fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)        
@@ -126,7 +122,7 @@ with detection_graph.as_default():
         score_view = numpy.squeeze(scores)[0]*100
         cv2.putText(frame, "FPS: " + str(int(fps)), (100, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 2)
         cv2.putText(frame, "Person: " + str(int(score_view)) + '%', (300,60), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 2)
-        # - Videostrømming
+        # - Video stream
         cv2.imshow('SSDLite + MobileNetV2', cv2.resize(frame, (im_w, im_h)))
         if cv2.waitKey(10) & 0xFF == ord('q'):
           break
