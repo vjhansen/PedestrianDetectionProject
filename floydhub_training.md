@@ -66,7 +66,7 @@ OK
 ### 3) Add files
 
 ```bash
-git clone https://github.com/vjhansen/pdp-bachelor.git 
+git clone https://github.com/vjhansen/PedestrianDetectionProject
 
 cd /floyd/home/PDP_folder/
 ```
@@ -78,8 +78,8 @@ Move everything from pdp-bachelor to `/floyd/home/PDP_folder/`.
 ```bash
 PDP_folder
 |--> data
-|   |--> eval.record (too big for github)
-|   |--> train.record (too big for github)
+|   |--> eval.record (generate file with TFrecord.py)
+|   |--> train.record (generate file with TFrecord.py)
 |   
 |--> training
 |   |--> ssdlite_mobilenet_v2_coco.config
