@@ -8,7 +8,7 @@
 ![alt text](https://raw.githubusercontent.com/vjhansen/pdp-bachelor/master/ogif.gif)
 
 
-### - [Training - FloydHub](../master/floydhub_training.md)
+### - [Training the Neural Network - FloydHub](../master/floydhub_training.md)
 
-### - [Install TensorFlow (Debian)](../master/install_tf.md)
+### - [Installing TensorFlow + Running the Real-Time Pedestrian Detection (Debian/macOS)](../master/install_tf.md)
 
