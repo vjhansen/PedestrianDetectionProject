@@ -1,7 +1,8 @@
+> - Outdated
 > - Setup  (~15 minutes).
 > - Training and evaluation (~4.5h for 14k steps of training).
 
-### 1) Setup - FloydHub
+### 1) Setup - https://www.floydhub.com/
 
 - Open a Workspace
 - Pick Environment: TensorFlow 1.12, Machine: GPU
