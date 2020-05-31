@@ -1,7 +1,6 @@
-# PDP
-# Konverterer fra .xml-fil til .csv-fil
-# Kilde: https://github.com/datitran/raccoon_dataset/blob/master/xml_to_csv.py
-    # hentet 08.01.19
+# Convert .xml-file to .csv-file
+# Source: https://github.com/datitran/raccoon_dataset/blob/master/xml_to_csv.py
+# Date: 08.01.19
 
 import os, glob
 import pandas as pd
