@@ -1,5 +1,5 @@
 # Pedestrian Detection Using Convolutional Neural Networks 
-> Victor J. Hansen & Kato S. Karlsen. - bachelor thesis 2019 - *Automation Engineering, University of Tromsø*
+> Victor J. Hansen & Kato S. Karlsen - Bachelor thesis 2019 - *Automation Engineering, University of Tromsø*
 
 
 ![alt text](https://raw.githubusercontent.com/vjhansen/pdp-bachelor/master/ogif.gif)
