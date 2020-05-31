@@ -1,6 +1,6 @@
 ## Install TensorFlow and run program
 
-> outdated, tested with Ubuntu 18.04 LTS and 18.10.
+> tested with Ubuntu 18.04 LTS and 18.10.
 
 ### 1) Download TensorFlow
 
@@ -25,7 +25,7 @@ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 
 ```bash
 cd /models/research/object_detection && \
-git clone https://github.com/vjhansen/pdp-bachelor.git && \
+git clone https://github.com/vjhansen/PedestrianDetectionProject && \
 cd /pdp-bachelor && \
 pip3 install -r requirements.txt
 ```
