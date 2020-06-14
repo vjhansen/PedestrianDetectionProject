@@ -1,6 +1,6 @@
 # Pedestrian Detection Using Convolutional Neural Networks 
 
-![GitHub commit activity](https://img.shields.io/github/commit-activity/y/vjhansen/PedestrianDetectionProject?color=g)
+![GitHub last commit](https://img.shields.io/github/last-commit/vjhansen/PedestrianDetectionProject?color=g)
 ![GitHub repo size](https://img.shields.io/github/repo-size/vjhansen/PedestrianDetectionProject)
 
 > Victor J. Hansen & Kato S. Karlsen - Bachelor thesis 2019 - *Automation Engineering, University of Tromsø*
