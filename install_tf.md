@@ -1,8 +1,6 @@
 ## Install TensorFlow and run program
 
-> Outdated
-
-> Tested with Ubuntu 18.04 LTS and 18.10.
+> Tested 12th October 2020 on macOS Catalina 10.15.6. 
 
 ### 1) Download TensorFlow
 
