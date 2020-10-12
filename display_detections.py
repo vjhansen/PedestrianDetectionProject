@@ -7,8 +7,10 @@ import numpy
 import sys
 import time
 import os
-import cv2    # - OpenCV
-import tensorflow as TF
+import cv2
+
+import tensorflow.compat.v1 as TF
+TF.disable_v2_behavior()
 
 from datetime import datetime
 from collections import defaultdict
