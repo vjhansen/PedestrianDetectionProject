@@ -28,7 +28,7 @@ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 ```bash
 cd /models/research/object_detection && \
 git clone https://github.com/vjhansen/PedestrianDetectionProject && \
-cd /pdp-bachelor && \
+cd /PedestrianDetectionProject && \
 pip3 install -r requirements.txt
 ```
 
