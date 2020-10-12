@@ -1,7 +1,7 @@
 # Pedestrian Detection using SSDLite + MobileNetV2
 
 # Code is based on:
-# https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
+# https://github.com/tensorflow/models/blob/master/research/object_detection/colab_tutorials/object_detection_tutorial.ipynb
 
 import numpy
 import sys
@@ -113,7 +113,7 @@ with detection_graph.as_default():
               (bbx_ymin, bbx_xmin, bbx_ymax, bbx_xmax) = (int(ymin*H), int(xmin*W), int(ymax*H), int(xmax*W))
               xCenter = int((xmax + xmin)*W / 2.0)
               yCenter = int((ymax + ymin)*H / 2.0)
-              cv2.circle(frame, (xCenter, yCenter), 3, (0,0,255), -1)
+              #cv2.circle(frame, (xCenter, yCenter), 3, (0,0,255), -1)
               # - coordinates for centre of detected object
               output_coords = 'X{0:d}Y{1:d}'.format(xCenter, yCenter)
               # - save images containing detected objects
